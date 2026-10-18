@@ -1,0 +1,355 @@
+{
+  "person": "Dev",
+  "writingStyle": "short and warm, sometimes mixes Hindi words, calls his mom 'Mummy'",
+  "engineUrl": "ws://localhost:8000/ws",
+  "engine": {
+    "autostart": true,
+    "source": "webcam",
+    "port": 8000,
+    "dir": "../engine",
+    "lockControl": false,
+    "python": ""
+  },
+  "ai": {
+    "provider": "ollama",
+    "ollamaModel": "auto",
+    "openaiBase": "",
+    "openaiKey": "",
+    "openaiModel": "",
+    "geminiModel": "gemini-2.0-flash",
+    "geminiKey": ""
+  },
+  "voice": {
+    "name": "",
+    "rate": 0.98,
+    "speakCompanion": true
+  },
+  "location": {
+    "place": "San Jose",
+    "lat": 37.3382,
+    "lon": -121.8863,
+    "units": "imperial"
+  },
+  "news": {
+    "interests": [
+      "Lakers",
+      "India cricket",
+      "artificial intelligence"
+    ],
+    "briefingSection": "top"
+  },
+  "preload": [
+    "whatsapp"
+  ],
+  "quickReplies": [
+    "Yes",
+    "No",
+    "I'm okay, just tired",
+    "Can you call me?"
+  ],
+  "lifeline": {
+    "contacts": [
+      {
+        "name": "Maya",
+        "topic": ""
+      },
+      {
+        "name": "Raj",
+        "topic": ""
+      }
+    ],
+    "ackTopic": "",
+    "escalateSec": 60
+  },
+  "people": [
+    {
+      "name": "Maya",
+      "phone": "",
+      "relation": "Daughter",
+      "phrases": [
+        "I love you",
+        "Can you come to my room?",
+        "I'm hungry",
+        "Call me when you're free"
+      ]
+    },
+    {
+      "name": "Raj",
+      "phone": "",
+      "relation": "Son",
+      "phrases": [
+        "I love you",
+        "How was your day?",
+        "Come visit this weekend?",
+        "Proud of you",
+        "Call me tonight"
+      ]
+    },
+    {
+      "name": "Mummy",
+      "phone": "",
+      "relation": "Mom",
+      "phrases": [
+        "I'm okay Mummy",
+        "Love you Mummy",
+        "Did you eat?",
+        "Call me"
+      ]
+    }
+  ],
+  "needs": [
+    {
+      "say": "Yes",
+      "big": true
+    },
+    {
+      "say": "No",
+      "big": true
+    },
+    {
+      "say": "Thank you"
+    },
+    {
+      "say": "Please wait",
+      "label": "Wait"
+    },
+    {
+      "say": "I'm in pain",
+      "label": "Pain",
+      "care": true
+    },
+    {
+      "say": "I need suction please",
+      "label": "Suction",
+      "care": true
+    },
+    {
+      "say": "Can you reposition me?",
+      "label": "Move me",
+      "care": true
+    },
+    {
+      "say": "I'm thirsty",
+      "label": "Thirsty"
+    },
+    {
+      "say": "I'm too hot",
+      "label": "Too hot"
+    },
+    {
+      "say": "I'm too cold",
+      "label": "Too cold"
+    },
+    {
+      "say": "I need the bathroom",
+      "label": "Bathroom"
+    },
+    {
+      "say": "I love you",
+      "label": "I love you"
+    }
+  ],
+  "input": {
+    "mode": "two",
+    "glanceHoldMs": 900
+  },
+  "agent": {
+    "url": "http://127.0.0.1:8100"
+  },
+  "eyes": {
+    "enabled": true,
+    "swapLeftRight": false
+  },
+  "routines": [
+    {
+      "name": "Play my jazz",
+      "sub": "Music, starts right away",
+      "icon": "music",
+      "tags": [
+        "evening"
+      ],
+      "steps": [
+        {
+          "app": "music",
+          "search": "jazz for evening",
+          "play": true
+        }
+      ]
+    },
+    {
+      "name": "Tell Maya I'm hungry",
+      "sub": "WhatsApp, 3 seconds to cancel",
+      "icon": "chat",
+      "tags": [
+        "meal"
+      ],
+      "steps": [
+        {
+          "message": {
+            "to": "Maya",
+            "text": "I'm feeling hungry, can you bring something?"
+          }
+        }
+      ]
+    },
+    {
+      "name": "Lakers highlights",
+      "sub": "YouTube, starts right away",
+      "icon": "play",
+      "steps": [
+        {
+          "app": "youtube",
+          "search": "Lakers highlights",
+          "play": true
+        }
+      ]
+    },
+    {
+      "name": "Rain sounds to sleep",
+      "sub": "YouTube, 10 hours",
+      "icon": "moon",
+      "tags": [
+        "night"
+      ],
+      "steps": [
+        {
+          "app": "youtube",
+          "search": "rain sounds 10 hours",
+          "play": true
+        }
+      ]
+    },
+    {
+      "name": "Ask Maya to come",
+      "sub": "WhatsApp, 3 seconds to cancel",
+      "icon": "chat",
+      "steps": [
+        {
+          "message": {
+            "to": "Maya",
+            "text": "Can you come to my room please?"
+          }
+        }
+      ]
+    },
+    {
+      "name": "Funny reels",
+      "sub": "Instagram Reels",
+      "icon": "reels",
+      "steps": [
+        {
+          "app": "reels"
+        }
+      ]
+    },
+    {
+      "name": "I need help",
+      "sub": "Calls everyone until someone answers",
+      "icon": "help",
+      "steps": [
+        {
+          "help": "needs help now"
+        }
+      ]
+    }
+  ],
+  "apps": [
+    {
+      "id": "reels",
+      "name": "Reels",
+      "sub": "Instagram",
+      "url": "https://www.instagram.com/reels/",
+      "color": "reels"
+    },
+    {
+      "id": "shorts",
+      "name": "Shorts",
+      "sub": "YouTube",
+      "url": "https://www.youtube.com/shorts",
+      "color": "videos"
+    },
+    {
+      "id": "youtube",
+      "name": "YouTube",
+      "sub": "Videos",
+      "url": "https://www.youtube.com/",
+      "color": "videos",
+      "search": "https://www.youtube.com/results?search_query={q}"
+    },
+    {
+      "id": "music",
+      "name": "Music",
+      "sub": "YouTube Music",
+      "url": "https://music.youtube.com/",
+      "color": "music",
+      "search": "https://music.youtube.com/search?q={q}"
+    },
+    {
+      "id": "whatsapp",
+      "name": "WhatsApp",
+      "sub": "Messages",
+      "url": "https://web.whatsapp.com/",
+      "color": "msg"
+    },
+    {
+      "id": "netflix",
+      "name": "Netflix",
+      "sub": "Shows",
+      "url": "https://www.netflix.com/browse",
+      "color": "shows",
+      "search": "https://www.netflix.com/search?q={q}"
+    },
+    {
+      "id": "food",
+      "name": "Food",
+      "sub": "Uber Eats",
+      "url": "https://www.ubereats.com/",
+      "color": "food",
+      "search": "https://www.ubereats.com/search?q={q}"
+    },
+    {
+      "id": "web",
+      "name": "Article",
+      "sub": "News",
+      "url": "about:blank",
+      "hidden": true
+    },
+    {
+      "id": "aiweb",
+      "name": "AI web",
+      "sub": "Browser Use",
+      "url": "about:blank",
+      "hidden": true
+    }
+  ],
+  "web": [
+    {
+      "name": "Wikipedia",
+      "url": "https://en.wikipedia.org/wiki/Main_Page"
+    },
+    {
+      "name": "BBC News",
+      "url": "https://www.bbc.com/news"
+    },
+    {
+      "name": "Weather",
+      "url": "https://weather.com/"
+    },
+    {
+      "name": "Hacker News",
+      "url": "https://news.ycombinator.com/"
+    },
+    {
+      "name": "Recipes",
+      "url": "https://www.allrecipes.com/"
+    }
+  ],
+  "errands": [
+    {
+      "name": "Renew my prescription",
+      "goal": "Renew my prescription",
+      "url": "https://pharmacy.example.com",
+      "sub": "Demo site: needs a login, then asks you before the last step"
+    }
+  ]
+}

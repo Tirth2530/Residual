@@ -1,0 +1,270 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta http-equiv="Content-Security-Policy" content="default-src 'self'; img-src 'self' data:; connect-src 'self' ws://localhost:* ws://127.0.0.1:* http://localhost:* http://127.0.0.1:*; style-src 'self' 'unsafe-inline'; font-src 'self'">
+<title>Residual Lab</title>
+<style>
+@font-face { font-family: "Plex"; src: url(fonts/ibm-plex-sans-latin-400-normal.woff2) format("woff2"); font-weight: 400; }
+@font-face { font-family: "Plex"; src: url(fonts/ibm-plex-sans-latin-500-normal.woff2) format("woff2"); font-weight: 500; }
+@font-face { font-family: "Plex"; src: url(fonts/ibm-plex-sans-latin-600-normal.woff2) format("woff2"); font-weight: 600; }
+@font-face { font-family: "PlexMono"; src: url(fonts/ibm-plex-mono-latin-400-normal.woff2) format("woff2"); font-weight: 400; }
+@font-face { font-family: "PlexMono"; src: url(fonts/ibm-plex-mono-latin-500-normal.woff2) format("woff2"); font-weight: 500; }
+
+/* An instrument panel. Every colour means one thing everywhere:
+   hand / brow / blink / gaze are the four input channels; ok / warn / bad are judgements. */
+:root {
+  --bg: #0e1217; --panel: #131820; --panel-2: #18202a; --line: #222b36; --grid: #1b232d;
+  --text: #d9e0e8; --muted: #8b97a7; --faint: #5a6677;
+  --hand: #5aa9e6; --brow: #e9a23b; --blink: #b48cf2; --gaze: #4fd1a5;
+  --ok: #4fd1a5; --warn: #e9a23b; --bad: #f06464; --sel: #f4b63f;
+}
+* { box-sizing: border-box; }
+html, body { margin: 0; height: 100%; background: var(--bg); color: var(--text); font: 13px/1.45 "Plex", system-ui, sans-serif; -webkit-font-smoothing: antialiased; }
+body { display: grid; grid-template-rows: 46px 1fr; overflow: hidden; }
+.n { font-family: "PlexMono", ui-monospace, monospace; font-variant-numeric: tabular-nums; }
+button { font: inherit; color: inherit; }
+
+/* header */
+header { display: flex; align-items: center; gap: 18px; padding: 0 14px 0 86px; border-bottom: 1px solid var(--line); -webkit-app-region: drag; white-space: nowrap; }
+header > * { -webkit-app-region: no-drag; }
+.brand { font-weight: 600; font-size: 15px; }
+.brand span { color: var(--faint); font-weight: 400; }
+.hk { color: var(--faint); }
+.hk b { color: var(--text); font-weight: 500; }
+.simw { color: #1a0d0d; background: var(--bad); padding: 2px 10px; border-radius: 4px; font-weight: 700; letter-spacing: .06em; }
+.armt { width: 100%; border-collapse: collapse; font-size: 11px; }
+.armt td, .armt th { padding: 2px 4px; text-align: left; } .armt th { color: var(--faint); font-weight: 400; }
+.arm-armed { color: var(--ok); } .arm-gesture, .arm-pending { color: var(--sel); } .arm-wait_release { color: var(--warn); }
+.v-VALID { color: var(--ok); } .v-WEAK { color: var(--warn); } .v-FAILED, .v-NOT_VISIBLE { color: var(--bad); }
+.ag-task { border-top: 1px solid var(--line); padding: 6px 0; font-size: 11px; }
+.ag-task .k { color: var(--faint); display: inline-block; width: 92px; }
+.ag-ev { color: var(--muted); } .ag-ev.error { color: var(--bad); } .ag-ev.reply, .ag-ev.outcome { color: var(--ok); }
+.dot { display: inline-block; width: 7px; height: 7px; border-radius: 50%; background: var(--faint); margin-right: 6px; vertical-align: 1px; }
+.dot.ok { background: var(--ok); } .dot.warn { background: var(--warn); } .dot.bad { background: var(--bad); }
+.tabs { margin-left: auto; display: flex; gap: 2px; background: var(--panel); padding: 3px; border-radius: 8px; }
+.tabs button { border: 0; background: none; padding: 5px 12px; border-radius: 6px; cursor: pointer; color: var(--muted); }
+.tabs button.cur { background: var(--panel-2); color: var(--text); }
+
+/* two-choice layout */
+#two { grid-template-columns: 360px minmax(0, 1fr) 400px; gap: 1px; background: var(--line); }
+#two .grow { flex: 1; min-height: 0; overflow: auto; }
+#t-cam { position: relative; aspect-ratio: 16 / 9; background: #000; border-radius: 6px; overflow: hidden; }
+#t-cam img { width: 100%; height: 100%; object-fit: cover; display: block; }
+#t-cam .none { position: absolute; inset: 0; display: grid; place-items: center; color: var(--faint); }
+#t-ruler { position: relative; height: 54px; margin-top: 4px; }
+#t-ruler .z { position: absolute; top: 0; height: 30px; display: grid; place-items: center; font-size: 10px; color: #0e1217; border-radius: 3px; }
+#t-ruler .tick { position: absolute; top: 34px; font-size: 10px; color: var(--faint); transform: translateX(-50%); }
+#t-ruler .needle { position: absolute; top: -4px; width: 3px; height: 38px; background: #fff; border-radius: 2px; transition: left .08s linear; }
+.t-sides { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; }
+.t-sides > div { background: var(--panel-2); border-radius: 8px; padding: 8px 10px; min-height: 90px; }
+.t-sides ul { list-style: none; padding: 0; margin: 6px 0 0; font-size: 13px; line-height: 1.6; }
+.t-sides .tl { color: #6fb3ea; } .t-sides .tr { color: #f2b84b; }
+.t-sides > div.lit { box-shadow: inset 0 0 0 2px var(--sel); }
+#t-log div { padding: 3px 14px; border-bottom: 1px solid var(--grid); font-size: 12px; }
+#t-log .g-left { color: #6fb3ea; } #t-log .g-right { color: #f2b84b; } #t-log .g-back { color: var(--ok); } #t-log .g-ignored { color: var(--faint); } #t-log .g-help { color: var(--bad); font-weight: 600; }
+
+/* live layout */
+.view { display: none; min-height: 0; }
+.view.cur { display: grid; }
+#live { grid-template-columns: 350px minmax(0, 1fr) 380px; grid-template-rows: minmax(0, 1fr) 236px; gap: 1px; background: var(--line); }
+.col { background: var(--bg); display: flex; flex-direction: column; min-height: 0; overflow: hidden; }
+#live > .col:first-child, #live > .col:last-child { overflow-y: auto; }
+::-webkit-scrollbar { width: 8px; height: 8px; } ::-webkit-scrollbar-thumb { background: #222b36; border-radius: 4px; } ::-webkit-scrollbar-track { background: transparent; }
+.log { overflow-x: hidden !important; }
+.decs { min-height: 170px; }
+.p { padding: 12px 14px; border-bottom: 1px solid var(--line); }
+.p:last-child { border-bottom: 0; }
+.p h3 { margin: 0 0 8px; font-size: 12px; font-weight: 500; color: var(--muted); display: flex; align-items: baseline; gap: 8px; }
+.p h3 .r { margin-left: auto; color: var(--faint); font-weight: 400; }
+.grow { flex: 1; min-height: 0; display: flex; flex-direction: column; }
+canvas { display: block; width: 100%; }
+
+/* camera */
+#cam { position: relative; aspect-ratio: 16 / 9; background: #0a0d11; border-radius: 6px; overflow: hidden; }
+#cam img { width: 100%; height: 100%; object-fit: cover; display: block; }
+#cam .none { position: absolute; inset: 0; display: grid; place-items: center; color: var(--faint); text-align: center; padding: 20px; }
+#cam .tag { position: absolute; left: 8px; bottom: 8px; background: rgba(10,13,17,.8); padding: 2px 7px; border-radius: 4px; color: var(--muted); }
+
+/* key-value rows */
+.kv { display: grid; grid-template-columns: auto 1fr; gap: 2px 12px; font-size: 11.5px; }
+.kv span:nth-child(even) { text-align: right; }
+.kv span:nth-child(odd) { color: var(--muted); }
+.bar { height: 6px; background: var(--grid); border-radius: 3px; overflow: hidden; margin-top: 3px; }
+.bar i { display: block; height: 100%; background: var(--muted); }
+.fat { display: grid; grid-template-columns: 124px 1fr 40px 30px; font-size: 11.5px; gap: 4px 8px; align-items: center; }
+.fat .w { color: var(--faint); text-align: right; }
+
+/* decision */
+.machine { display: grid; grid-template-columns: repeat(4, 1fr); gap: 6px; margin-bottom: 10px; }
+.node { border: 1px solid var(--line); border-radius: 6px; padding: 6px 6px; text-align: center; color: var(--faint); font-size: 12px; }
+.node.on { border-color: var(--sel); color: var(--text); background: rgba(244,182,63,.08); }
+.node.was { border-color: var(--ok); color: var(--ok); }
+.clause { display: grid; grid-template-columns: 14px 1fr auto; gap: 6px; align-items: center; padding: 2px 0; color: var(--muted); }
+.clause i { width: 9px; height: 9px; border-radius: 2px; border: 1px solid var(--faint); }
+.clause.on { color: var(--text); } .clause.on i { background: var(--warn); border-color: var(--warn); }
+.ev-meter { position: relative; height: 22px; background: var(--grid); border-radius: 4px; overflow: hidden; margin: 6px 0 4px; }
+.ev-meter i { position: absolute; left: 0; top: 0; bottom: 0; background: var(--sel); opacity: .85; }
+.ev-meter b { position: absolute; top: -2px; bottom: -2px; width: 2px; background: var(--text); }
+.decs { overflow: auto; min-height: 0; }
+.dec { border: 1px solid var(--line); border-radius: 6px; padding: 8px 10px; margin-bottom: 8px; }
+.dec .t { display: flex; gap: 8px; align-items: baseline; }
+.dec .res { margin-left: auto; font-size: 12px; }
+.dec .res.good { color: var(--ok); } .dec .res.bad { color: var(--bad); } .dec .res.pend { color: var(--warn); }
+.dec ul { margin: 5px 0 0; padding-left: 16px; color: var(--muted); }
+.ci { display: inline-block; position: relative; width: 90px; height: 8px; background: var(--grid); border-radius: 4px; vertical-align: middle; margin: 0 6px; }
+.ci i { position: absolute; top: 0; bottom: 0; border-radius: 4px; opacity: .45; }
+.ci b { position: absolute; top: -2px; bottom: -2px; width: 2px; }
+.map { display: grid; grid-template-columns: 62px 1fr; gap: 4px 10px; }
+.map .k { color: var(--muted); }
+.chipc { display: inline-flex; align-items: center; gap: 5px; }
+.chipc i { width: 8px; height: 8px; border-radius: 50%; }
+
+/* bottom row */
+#bottom { grid-column: 1 / -1; display: grid; grid-template-columns: minmax(0, 1.2fr) minmax(0, .8fr) minmax(0, .9fr) minmax(0, 1.2fr) 330px; gap: 1px; background: var(--line); min-height: 0; }
+#bottom > div { background: var(--bg); min-height: 0; display: flex; flex-direction: column; overflow: hidden; }
+.log { flex: 1; overflow: auto; font-size: 12px; padding: 0 14px 10px; }
+.log div { display: grid; grid-template-columns: 58px 92px 1fr; gap: 8px; padding: 1px 0; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+.log .tm { color: var(--faint); }
+.log .src { color: var(--muted); overflow: hidden; text-overflow: ellipsis; }
+.log .x { overflow: hidden; text-overflow: ellipsis; }
+table { border-collapse: collapse; width: 100%; font-size: 12px; }
+td, th { padding: 3px 6px; text-align: left; border-bottom: 1px solid var(--grid); white-space: nowrap; }
+th { color: var(--faint); font-weight: 400; }
+#bottom > .pres { flex-direction: row; }
+.pres { padding: 10px 14px; display: flex; flex-wrap: wrap; gap: 6px; align-content: flex-start; overflow: auto; }
+.pres h3 { width: 100%; margin: 4px 0 2px; font-size: 12px; font-weight: 500; color: var(--muted); }
+.pres button { border: 1px solid var(--line); background: var(--panel); border-radius: 6px; padding: 5px 9px; cursor: pointer; }
+.pres button:hover { border-color: var(--muted); }
+.pres button.cur { border-color: var(--sel); color: var(--sel); }
+.lvl { width: 100%; display: grid; grid-template-columns: 50px 1fr 36px; gap: 6px; align-items: center; color: var(--muted); }
+.lvl input { width: 100%; accent-color: var(--muted); }
+
+/* evaluation + care */
+#eval, #care { overflow: auto; padding: 22px 28px 40px; display: none; }
+#eval.cur, #care.cur { display: block; }
+.prose { max-width: 92ch; color: var(--muted); font-size: 14px; line-height: 1.6; }
+.prose b { color: var(--text); font-weight: 500; }
+h2 { font-size: 18px; font-weight: 500; margin: 0 0 6px; }
+h4 { font-size: 13px; font-weight: 500; margin: 26px 0 8px; color: var(--text); }
+.mult { display: grid; grid-template-columns: repeat(auto-fill, minmax(330px, 1fr)); gap: 16px; margin-top: 14px; }
+.chart { background: var(--panel); border-radius: 8px; padding: 12px 14px; }
+.chart .t { display: flex; gap: 8px; align-items: baseline; }
+.chart .t span { color: var(--faint); font-size: 12px; }
+.legend { display: flex; flex-wrap: wrap; gap: 14px; margin-top: 10px; color: var(--muted); font-size: 12px; }
+.legend i { display: inline-block; width: 14px; height: 3px; margin-right: 6px; vertical-align: middle; }
+.win { color: var(--ok); } .loss { color: var(--bad); } .tie { color: var(--muted); }
+.btns button { border: 1px solid var(--line); background: var(--panel); border-radius: 6px; padding: 6px 12px; cursor: pointer; margin-right: 6px; }
+[hidden]{display:none !important}
+#t-simbar { display: none; position: fixed; top: 0; left: 0; right: 0; z-index: 50; background: #f06464; color: #1c0d0d; font-weight: 800; letter-spacing: .08em; text-align: center; padding: 6px; }
+body.sim #t-simbar { display: block; }
+.t-btns { display: flex; flex-wrap: wrap; gap: 6px; } .t-btns button { font: inherit; font-size: 12px; color: var(--ink, #dfe6ee); background: #1b222c; border: 1px solid #2a333f; border-radius: 8px; padding: 5px 9px; cursor: pointer; }
+#t-why div { margin: 2px 0; } #t-why .weak { color: #f2b84b; } #t-why .clear { color: #4fd1a5; }
+#t-pf div { display: grid; grid-template-columns: 44px 150px 1fr; gap: 6px; padding: 2px 0; font-size: 12px; }
+#t-pf .PASS { color: #4fd1a5; } #t-pf .WARN { color: #f2b84b; } #t-pf .FAIL { color: #f06464; }
+#t-agent .ag-task { display: block; padding: 6px 0; border-bottom: 1px solid #222b36; font-size: 12px; }
+#t-agent .ag-task > div { display: block; margin: 2px 0; }
+#t-agent .k { display: inline-block; min-width: 96px; color: var(--faint); font-size: 10px; letter-spacing: .06em; }
+</style>
+</head>
+<body>
+<header>
+  <span class="brand">Residual <span>Lab</span></span>
+  <span class="hk" id="h-src"><span class="dot"></span>engine offline</span>
+  <span class="hk" id="h-t"></span>
+  <span class="hk" id="h-pol"></span>
+  <span class="hk" id="h-ai"></span>
+  <span class="hk simw" id="h-sim" hidden>SIMULATED WEAKENING</span>
+  <nav class="tabs"><button data-v="two" id="tab-two" hidden>Two choices</button><button data-v="live" class="cur">Live</button><button data-v="eval">Evaluation</button><button data-v="care">Care report</button></nav>
+</header>
+
+<section class="view cur" id="live">
+  <div class="col">
+    <div class="p"><h3>Camera <span class="r n" id="cam-fps"></span></h3>
+      <div id="cam"><img id="cam-img" alt="" hidden><div class="none" id="cam-none">No camera frames.<br>Source is not the webcam.</div><span class="tag n" id="cam-tag" hidden></span></div></div>
+    <div class="p"><h3>Eyes: gaze plane <span class="r n" id="gz-word"></span></h3>
+      <canvas id="gaze" style="height:170px"></canvas>
+      <div class="kv n" style="margin-top:6px"><span>head turn</span><span id="gz-yaw">.</span><span>glance size L/R/up</span><span id="gz-range">.</span><span>glances L/R/up</span><span id="gz-count">.</span></div></div>
+    <div class="p grow"><h3>Eye fatigue: weighted score <span class="r n" id="fat-score"></span></h3>
+      <div class="fat n" id="fat"></div>
+      <h3 style="margin-top:12px">Help pattern <span class="r n" id="help-n"></span></h3>
+      <div class="bar" style="height:10px"><i id="help-bar" style="background:var(--bad);width:0"></i></div>
+      <div class="kv" style="margin-top:6px"><span>held shut</span><span class="n" id="help-held">0.0 s</span><span>needs</span><span class="n" id="help-rule"></span></div></div>
+  </div>
+
+  <div class="col">
+    <div class="p grow" style="padding-bottom:6px"><h3>Input channels: amplitude, onset threshold, sequential evidence <span class="r">last 10 s, every frame</span></h3>
+      <canvas id="chan" style="flex:1;min-height:0"></canvas></div>
+    <div class="p" style="height:212px;flex:none"><h3>Reliability p<sub>hit</sub> with interval <span class="r">last 2 min. Dashed: switch 0.70, accept 0.85</span></h3>
+      <canvas id="rel" style="height:168px"></canvas></div>
+  </div>
+
+  <div class="col">
+    <div class="p"><h3>Policy <span class="r n" id="pol-sw"></span></h3>
+      <div class="machine" id="machine"><div class="node" data-n="ACTIVE">Active</div><div class="node" data-n="DEGRADING">Degrading</div><div class="node" data-n="VERIFY">Verify</div><div class="node" data-n="MIGRATE">Migrate</div></div>
+      <div id="clauses"></div>
+      <div class="kv n" style="margin-top:6px"><span>dwell</span><span id="dwell">.</span></div></div>
+    <div class="p"><h3>Evidence for the next command</h3>
+      <div class="ev-meter"><i id="ev-i"></i><b id="ev-b"></b></div>
+      <div class="n" id="ev-cls" style="color:var(--faint);font-size:11px;margin-bottom:4px"></div>
+      <div class="kv n"><span>S = max(0, S + clip(LLR))</span><span id="ev-s">.</span><span id="ev-f">bound ln((1-β)/α)</span><span id="ev-bd">.</span></div></div>
+    <div class="p"><h3>Calibration and arming <span class="r">one gesture = one action</span></h3><div id="armcal" class="n"></div></div>
+    <div class="p"><h3>Interface mapping <span class="r n" id="map-mode"></span></h3><div class="map" id="map"></div></div>
+    <div class="p grow"><h3>Why it switched <span class="r">every check and move, with its evidence</span></h3><div class="decs" id="decs"></div></div>
+  </div>
+
+  <div id="bottom">
+    <div><div class="p" style="border:0;padding-bottom:4px"><h3>Event stream <span class="r">engine and app, newest first</span></h3></div><div class="log n" id="log"></div></div>
+    <div><div class="p" style="border:0;padding-bottom:4px"><h3>AI calls <span class="r n" id="ai-sum"></span></h3></div><div class="log" style="padding-top:0"><table class="n" id="ai-t"></table></div></div>
+    <div><div class="p" style="border:0;padding-bottom:4px"><h3>Suggested for now: intent model <span class="r">0.45 habit + 0.20 recency + 0.25 context + 0.10 prior</span></h3></div><div class="log" style="padding-top:0"><table class="n" id="int-t"></table>
+      <h3 style="margin:12px 0 4px;font-size:12px;font-weight:500;color:var(--muted)">Site adapter</h3><div class="n" id="adapter" style="color:var(--muted)">No app open</div></div></div>
+    <div><div class="p" style="border:0;padding-bottom:4px"><h3>Agent: Residual Relay <span class="r n" id="ag-h"></span></h3></div><div class="log" style="padding-top:0" id="agent"><p style="color:var(--faint)">No requests yet.</p></div></div>
+    <div class="pres" id="pres">
+      <h3>Run a scenario on the real engine</h3>
+      <button data-s="handRamp">Hand fades, 20 s</button><button data-s="handDrop">Hand gives out</button><button data-s="browRamp">Eyebrow fades</button><button data-s="allRamp">Everything weakens</button><button data-s="recover">Recover all</button>
+      <div class="lvl n"><span>hand</span><input type="range" min="0" max="100" value="0" data-c="hand"><span>0</span></div>
+      <div class="lvl n"><span>brow</span><input type="range" min="0" max="100" value="0" data-c="brow"><span>0</span></div>
+      <div class="lvl n"><span>blink</span><input type="range" min="0" max="100" value="0" data-c="blink"><span>0</span></div>
+      <h3>Source</h3>
+      <button data-src="webcam">Webcam</button><button data-src="autopilot">Simulated person</button><button data-src="keyboard">Keyboard</button><button data-x="calibrate">Calibrate</button><button data-x="lock">Lock control</button><button data-x="ack">Carer answers</button><button data-x="agentAck" title="Only works when the agent allows simulated replies">Maya replies (SIMULATED)</button>
+    </div>
+  </div>
+</section>
+
+<div id="t-simbar">SIMULATED WEAKENING · the eyebrow signal is being scaled down on purpose for the demo</div>
+<section class="view" id="two">
+  <div class="col">
+    <div class="p"><h3>Camera <span class="r n" id="t-fps"></span></h3><div id="t-cam"><img id="t-img" alt=""><div class="none" id="t-none">Waiting for the camera…</div></div>
+      <div class="n" id="t-camstate" style="margin-top:6px;color:var(--muted)"></div></div>
+    <div class="p"><h3>How picks work <span class="r" id="t-scheme"></span></h3><div class="kv n" id="t-map"></div></div>
+    <div class="p"><h3>Controls <span class="r n" id="t-rec"></span></h3><div class="t-btns">
+      <button data-cmd='{"two":"simulate"}'>Simulate weakening</button><button data-cmd='{"two":"test"}'>Test my controls</button><button data-cmd='{"two":"setup"}'>Setup</button>
+      <button data-cmd='{"rec":"start"}'>Record session</button><button data-cmd='{"rec":"stop"}'>Stop recording</button><button data-cmd='{"rec":"delete"}'>Delete recordings</button><button id="t-pf-run">Run preflight</button></div>
+      <div class="kv n" id="t-cal" style="margin-top:8px"></div></div>
+    <div class="p grow"><h3>Eye closure ruler <span class="r n" id="t-closed"></span></h3>
+      <div id="t-ruler"></div>
+      <div class="kv n" style="margin-top:8px"><span>help pattern</span><span id="t-help">0 / 3</span><span>double blink</span><span id="t-first">.</span><span>eyebrows</span><span id="t-browstate">.</span></div></div>
+  </div>
+  <div class="col">
+    <div class="p" style="flex:1;display:flex;flex-direction:column;min-height:0"><h3>Signals, last 10 s <span class="r">line = this person's command threshold, dashed = back to rest</span></h3>
+      <canvas id="t-sig" style="flex:1;min-height:0"></canvas></div>
+    <div class="p" style="height:190px;display:flex;flex-direction:column"><h3><span id="t-epsname">Eyebrow</span> strength per attempt <span class="r">above the threshold, vs what Setup learned (1.0)</span></h3>
+      <canvas id="t-eps" style="flex:1;min-height:0"></canvas></div>
+    <div class="p"><h3>Signal quality <span class="r n" id="t-verdict"></span></h3><div id="t-why" class="n"></div><div class="kv n" id="t-qstats" style="margin-top:6px"></div></div>
+  </div>
+  <div class="col">
+    <div class="p"><h3>Screen now <span class="r n" id="t-mode"></span></h3><div id="t-crumbs" class="n" style="color:var(--muted);margin-bottom:8px"></div>
+      <div class="t-sides"><div><b class="tl">LEFT</b><ul id="t-left"></ul></div><div><b class="tr">RIGHT</b><ul id="t-right"></ul></div></div>
+      <div id="t-q" class="n" style="margin-top:8px;color:var(--warn)"></div></div>
+    <div class="p" id="t-pf-box" hidden><h3>Preflight <span class="r n" id="t-pf-at"></span></h3><div id="t-pf" class="n"></div></div>
+    <div class="p"><h3>Agent: Residual Relay</h3><div class="n" id="t-agh" style="font-size:12px;margin:-4px 0 8px;color:var(--muted)">not running</div><div class="log n" id="t-agent" style="padding:0;max-height:260px;overflow:auto"><p style="color:var(--faint)">No requests yet. Get help or an ASI:One request shows its intent, plan, tool calls and outcome here.</p></div></div>
+    <div class="p"><h3>AI web mode <span class="r">Browser Use</span></h3><div id="t-ai" class="n" style="color:var(--muted)">Not in use</div></div>
+    <div class="p grow"><h3>Gestures and picks <span class="r">newest first</span></h3><div class="log n" id="t-log" style="padding:0"></div></div>
+  </div>
+</section>
+<section class="view" id="eval"></section>
+<section class="view" id="care"></section>
+<script src="lab.js"></script>
+</body>
+</html>

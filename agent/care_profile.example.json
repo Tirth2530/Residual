@@ -1,0 +1,47 @@
+{
+  "person": "Dev",
+  "spending": {
+    "per_order_cap_cents": 2500,
+    "daily_cap_cents": 6000,
+    "allowed_merchants": [
+      "luna-kitchen",
+      "green-bowl",
+      "harbor-deli"
+    ],
+    "asi_may_confirm": false,
+    "authorized_asi": [],
+    "approver": "Maya",
+    "approvers": [
+      "Maya",
+      "Raj"
+    ]
+  },
+  "usual": {
+    "merchant_id": "luna-kitchen",
+    "items": [
+      {
+        "id": "soup-lemon-rice",
+        "qty": 1,
+        "kind": "soup"
+      },
+      {
+        "id": "smoothie-berry",
+        "qty": 1,
+        "kind": "drink"
+      }
+    ]
+  },
+  "dietary": [],
+  "delivery": {
+    "label": "Home",
+    "address": "123 Example Street"
+  },
+  "caregiver_token_sha256": "",
+  "hands": {
+    "allowed_hosts": [
+      "pharmacy.example.com",
+      "en.wikipedia.org",
+      "example.org"
+    ]
+  }
+}

@@ -1,0 +1,6 @@
+# Webcam perception + keystroke output. MediaPipe ships wheels for Python 3.9-3.12;
+# use Python 3.11 on the demo laptop.
+-r requirements.txt
+mediapipe>=0.10.14
+opencv-python>=4.9
+pynput>=1.7

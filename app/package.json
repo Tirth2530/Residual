@@ -1,0 +1,16 @@
+{
+  "name": "residual",
+  "version": "1.0.0",
+  "description": "Residual: an adaptive control layer for people with ALS. Real apps, Back / Select / Next from whatever movement still works, a companion that talks, and help that keeps calling.",
+  "main": "main.js",
+  "private": true,
+  "scripts": {
+    "start": "electron .",
+    "test": "node --test tests/lib.test.js tests/new.test.js tests/v3.test.js tests/brief.test.js tests/asi.test.js tests/scroll.test.js tests/layout.test.js tests/music.test.js tests/navrules.test.js tests/swarm.test.js tests/homeview.test.js",
+    "lab": "electron . --lab",
+    "preflight": "electron . --preflight"
+  },
+  "devDependencies": {
+    "electron": "33.2.1"
+  }
+}

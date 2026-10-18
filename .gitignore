@@ -1,0 +1,63 @@
+# ================================================================ secrets: never push these
+# Real keys live only in these git-ignored files. Copy the *.example files to make your own.
+.env
+.env.*
+*.env
+!.env.example
+!*.env.example
+*.pem
+*.key
+*.p12
+local_token
+agent/private_keys.json
+# real phone numbers and the real care plan (agent/*.example.json are the templates)
+agent/contacts.json
+agent/care_profile.json
+# the agent's runtime state: tasks, audit log, webhook id, Photon map, tunnel/agent/app logs
+agent/state/
+
+# ================================================================ dependencies and virtual environments
+node_modules/
+.venv/
+.venv*/
+venv/
+__pycache__/
+*.pyc
+*.pyo
+
+# ================================================================ generated, rebuilt by one command
+# MediaPipe's WebAssembly runtime is copied from node_modules by `npm install` in eyes/ (a postinstall step),
+# and the app's eye bundle is built by `npm run build:app` in eyes/. Neither belongs in git.
+eyes/dist/
+eyes/public/mediapipe/
+app/ui/eyes/
+# the Python engine's downloaded models (python scripts/get_models.py) and recordings
+engine/models/*.task
+engine/recordings/
+engine/sessions/
+
+# ================================================================ test and tool caches, logs
+.pytest_cache/
+.vitest/
+.cache/
+coverage/
+*.tsbuildinfo
+*.log
+npm-debug.log*
+
+# ================================================================ editor and operating-system files
+.DS_Store
+.idea/
+.vscode/
+*.swp
+
+# ================================================================ personal recordings and large media
+# Session recordings (numbers only, but personal) and screen recordings of demos. Put a demo video on YouTube, not in git.
+recordings/
+*.mov
+*.mp4
+*.mkv
+
+docs/
+
+eyes/

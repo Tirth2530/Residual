@@ -1,0 +1,6 @@
+uagents>=0.26
+aiohttp>=3.9
+pydantic>=2
+python-dotenv>=1.0
+pytest>=8
+pytest-asyncio>=0.23

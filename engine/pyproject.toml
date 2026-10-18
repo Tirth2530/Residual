@@ -1,0 +1,17 @@
+[project]
+name = "residual"
+version = "0.1.0"
+description = "Failover for the human body: an adaptive control layer for assistive input"
+requires-python = ">=3.10"
+
+[tool.pytest.ini_options]
+testpaths = ["tests"]
+pythonpath = ["."]
+# If a test ever hangs (a thread that won't stop, a socket that won't close), dump every thread's
+# stack after 120 s instead of stalling silently. Slow server tests run in real time (~20 s each).
+faulthandler_timeout = 120
+addopts = "--durations=5"
+
+[tool.ruff]
+line-length = 100
+target-version = "py310"

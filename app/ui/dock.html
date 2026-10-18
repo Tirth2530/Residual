@@ -1,0 +1,34 @@
+<!doctype html>
+<html><head><meta charset="utf-8">
+<meta http-equiv="Content-Security-Policy" content="default-src 'self'; style-src 'self' 'unsafe-inline'; font-src 'self'; img-src 'self' data:">
+<style>
+/* The two choices, floating over a website that fills the window. Translucent so the page shows through. */
+@font-face { font-family: "Atkinson"; src: url(fonts/atkinson-hyperlegible-latin-700-normal.woff2) format("woff2"); font-weight: 700; }
+@font-face { font-family: "Fraunces"; src: url(fonts/fraunces-latin-600-normal.woff2) format("woff2"); font-weight: 600; }
+:root { --left: #7DB8E8; --right: #F4B63F; --paper: #E8ECEF; --muted: #9DB0BF; --sage: #8fc1a3; }
+html, body { margin: 0; height: 100%; background: transparent; overflow: hidden; font-family: "Atkinson", system-ui, sans-serif; color: var(--paper); -webkit-font-smoothing: antialiased; }
+#wrap { position: absolute; inset: 0; display: grid; grid-template-columns: 1fr 1fr; gap: 14px; padding: 0 14px 14px; box-sizing: border-box; }
+.two-card { position: relative; overflow: hidden; border-radius: 26px; cursor: pointer; display: flex; flex-direction: column; align-items: center; justify-content: center; text-align: center;
+  padding: 44px 22px 30px; background: rgba(16, 15, 22, .93); border: 2px solid rgba(255,255,255,.10); box-shadow: 0 -10px 40px -10px rgba(0,0,0,.6); transition: transform .12s, background .15s; }
+.two-card.left { border-color: rgba(111,179,234,.45); } .two-card.right { border-color: rgba(242,184,75,.45); }
+.two-card.left.looking { border-color: var(--left); box-shadow: inset 0 0 0 2px var(--left), 0 0 50px -14px var(--left); }
+.two-card.right.looking { border-color: var(--right); box-shadow: inset 0 0 0 2px var(--right), 0 0 50px -14px var(--right); }
+.two-card.picked { transform: scale(.985); } .two-card.left.picked { background: rgba(111,179,234,.95); color: #0e1a26; } .two-card.right.picked { background: rgba(242,184,75,.95); color: #241904; }
+.two-card.dim { opacity: .45; }
+.two-how { position: absolute; top: 12px; left: 0; right: 0; display: flex; align-items: center; justify-content: center; gap: 10px; font-size: 17px; font-weight: 700; }
+.two-card.left .two-how { color: var(--left); } .two-card.right .two-how { color: var(--right); }
+.two-ic svg { width: 28px; height: 28px; fill: none; stroke: currentColor; stroke-width: 2.6; stroke-linecap: round; stroke-linejoin: round; display: block; }
+.two-card h2 { font: 600 clamp(28px, 3.2vw, 52px)/1.08 "Fraunces", serif; margin: 0; color: inherit; }
+.two-more { opacity: .5; margin-left: .15em; }
+.two-sub { font-size: 18px; color: var(--muted); margin: 8px 0 0; }
+.two-count { font-size: 13px; letter-spacing: .1em; text-transform: uppercase; color: var(--muted); margin: 0 0 8px; }
+.two-card ul { list-style: none; padding: 0; margin: 0; display: flex; flex-wrap: wrap; gap: 8px; justify-content: center; }
+.two-card li { font-size: clamp(16px, 1.5vw, 24px); font-weight: 700; padding: 7px 14px; border-radius: 12px; background: rgba(255,255,255,.09); }
+.two-state { position: absolute; bottom: 12px; left: 0; right: 0; font-size: 17px; font-weight: 700; min-height: 20px; }
+.two-card.left .two-state { color: var(--left); } .two-card.right .two-state { color: var(--right); }
+.two-fill { position: absolute; left: 0; bottom: 0; height: 7px; width: 0; transition: width .12s linear; }
+.two-card.left .two-fill { background: var(--left); } .two-card.right .two-fill { background: var(--right); }
+body.large .two-card h2 { font-size: clamp(36px, 4.2vw, 68px); } body.large .two-card li { font-size: clamp(20px, 2vw, 30px); } body.large .two-how { font-size: 21px; }
+</style></head>
+<body><div id="wrap"><div class="two-card left" id="L"></div><div class="two-card right" id="R"></div></div>
+<script src="dock.js"></script></body></html>

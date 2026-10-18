@@ -1,0 +1,3160 @@
+{
+ "generated": "2026-10-17 08:47",
+ "seeds": 30,
+ "duration_s": 150.0,
+ "severities": [
+  0.0,
+  0.5,
+  0.8,
+  0.95
+ ],
+ "systems": [
+  "fixed",
+  "threshold",
+  "hysteresis",
+  "truth_switch",
+  "residual"
+ ],
+ "labels": {
+  "fixed": "Calibrated once",
+  "threshold": "Switch when hits < 50%",
+  "hysteresis": "Switch + dwell + no-return",
+  "truth_switch": "Knows true degradation, switches instantly",
+  "residual": "Residual"
+ },
+ "scenarios": [
+  {
+   "name": "shrink",
+   "held_out": false,
+   "about": "hand movement gradually gets smaller"
+  },
+  {
+   "name": "jitter",
+   "held_out": true,
+   "about": "hand movement gradually gets shakier"
+  },
+  {
+   "name": "dropout",
+   "held_out": true,
+   "about": "hand tracking gradually drops frames"
+  },
+  {
+   "name": "fatigue",
+   "held_out": true,
+   "about": "hand suddenly gets weaker, smaller and shakier at once"
+  },
+  {
+   "name": "multi",
+   "held_out": true,
+   "about": "every movement degrades together"
+  }
+ ],
+ "cells": [
+  {
+   "scenario": "shrink",
+   "severity": 0.0,
+   "system": "fixed",
+   "cpm": [
+    12.227,
+    11.96,
+    12.493
+   ],
+   "bpm": [
+    31.606,
+    30.917,
+    32.295
+   ],
+   "fpm": 0.0,
+   "switches": 0.0,
+   "retained": 1.0
+  },
+  {
+   "scenario": "shrink",
+   "severity": 0.0,
+   "system": "threshold",
+   "cpm": [
+    12.227,
+    11.96,
+    12.493
+   ],
+   "bpm": [
+    31.606,
+    30.917,
+    32.295
+   ],
+   "fpm": 0.0,
+   "switches": 0.0,
+   "retained": 1.0
+  },
+  {
+   "scenario": "shrink",
+   "severity": 0.0,
+   "system": "hysteresis",
+   "cpm": [
+    12.227,
+    11.96,
+    12.493
+   ],
+   "bpm": [
+    31.606,
+    30.917,
+    32.295
+   ],
+   "fpm": 0.0,
+   "switches": 0.0,
+   "retained": 1.0
+  },
+  {
+   "scenario": "shrink",
+   "severity": 0.0,
+   "system": "truth_switch",
+   "cpm": [
+    12.213,
+    11.96,
+    12.48
+   ],
+   "bpm": [
+    31.571,
+    30.917,
+    32.261
+   ],
+   "fpm": 0.0,
+   "switches": 0.0,
+   "retained": 1.0
+  },
+  {
+   "scenario": "shrink",
+   "severity": 0.0,
+   "system": "residual",
+   "cpm": [
+    12.213,
+    11.96,
+    12.48
+   ],
+   "bpm": [
+    31.571,
+    30.917,
+    32.261
+   ],
+   "fpm": 0.0,
+   "switches": 0.0,
+   "retained": 1.0
+  },
+  {
+   "scenario": "shrink",
+   "severity": 0.5,
+   "system": "fixed",
+   "cpm": [
+    12.093,
+    11.827,
+    12.373
+   ],
+   "bpm": [
+    31.261,
+    30.572,
+    31.985
+   ],
+   "fpm": 0.0,
+   "switches": 0.0,
+   "retained": 0.989
+  },
+  {
+   "scenario": "shrink",
+   "severity": 0.5,
+   "system": "threshold",
+   "cpm": [
+    12.093,
+    11.827,
+    12.373
+   ],
+   "bpm": [
+    31.261,
+    30.572,
+    31.985
+   ],
+   "fpm": 0.0,
+   "switches": 0.0,
+   "retained": 0.989
+  },
+  {
+   "scenario": "shrink",
+   "severity": 0.5,
+   "system": "hysteresis",
+   "cpm": [
+    12.093,
+    11.827,
+    12.373
+   ],
+   "bpm": [
+    31.261,
+    30.572,
+    31.985
+   ],
+   "fpm": 0.0,
+   "switches": 0.0,
+   "retained": 0.989
+  },
+  {
+   "scenario": "shrink",
+   "severity": 0.5,
+   "system": "truth_switch",
+   "cpm": [
+    12.173,
+    11.907,
+    12.467
+   ],
+   "bpm": [
+    31.304,
+    30.602,
+    32.084
+   ],
+   "fpm": 0.027,
+   "switches": 1.0,
+   "retained": 0.997
+  },
+  {
+   "scenario": "shrink",
+   "severity": 0.5,
+   "system": "residual",
+   "cpm": [
+    12.213,
+    11.96,
+    12.48
+   ],
+   "bpm": [
+    31.571,
+    30.917,
+    32.261
+   ],
+   "fpm": 0.0,
+   "switches": 0.0,
+   "retained": 1.0
+  },
+  {
+   "scenario": "shrink",
+   "severity": 0.8,
+   "system": "fixed",
+   "cpm": [
+    8.027,
+    7.813,
+    8.253
+   ],
+   "bpm": [
+    20.749,
+    20.197,
+    21.335
+   ],
+   "fpm": 0.0,
+   "switches": 0.0,
+   "retained": 0.656
+  },
+  {
+   "scenario": "shrink",
+   "severity": 0.8,
+   "system": "threshold",
+   "cpm": [
+    10.133,
+    9.867,
+    10.413
+   ],
+   "bpm": [
+    26.195,
+    25.505,
+    26.918
+   ],
+   "fpm": 0.0,
+   "switches": 1.0,
+   "retained": 0.829
+  },
+  {
+   "scenario": "shrink",
+   "severity": 0.8,
+   "system": "hysteresis",
+   "cpm": [
+    10.133,
+    9.867,
+    10.413
+   ],
+   "bpm": [
+    26.195,
+    25.505,
+    26.918
+   ],
+   "fpm": 0.0,
+   "switches": 1.0,
+   "retained": 0.829
+  },
+  {
+   "scenario": "shrink",
+   "severity": 0.8,
+   "system": "truth_switch",
+   "cpm": [
+    12.173,
+    11.88,
+    12.467
+   ],
+   "bpm": [
+    31.304,
+    30.544,
+    32.072
+   ],
+   "fpm": 0.027,
+   "switches": 1.0,
+   "retained": 0.997
+  },
+  {
+   "scenario": "shrink",
+   "severity": 0.8,
+   "system": "residual",
+   "cpm": [
+    11.6,
+    11.267,
+    11.907
+   ],
+   "bpm": [
+    29.669,
+    28.646,
+    30.576
+   ],
+   "fpm": 0.053,
+   "switches": 1.0,
+   "retained": 0.95
+  },
+  {
+   "scenario": "shrink",
+   "severity": 0.95,
+   "system": "fixed",
+   "cpm": [
+    7.12,
+    6.893,
+    7.36
+   ],
+   "bpm": [
+    18.405,
+    17.819,
+    19.026
+   ],
+   "fpm": 0.0,
+   "switches": 0.0,
+   "retained": 0.582
+  },
+  {
+   "scenario": "shrink",
+   "severity": 0.95,
+   "system": "threshold",
+   "cpm": [
+    10.12,
+    9.853,
+    10.4
+   ],
+   "bpm": [
+    26.081,
+    25.415,
+    26.815
+   ],
+   "fpm": 0.013,
+   "switches": 1.07,
+   "retained": 0.828
+  },
+  {
+   "scenario": "shrink",
+   "severity": 0.95,
+   "system": "hysteresis",
+   "cpm": [
+    10.12,
+    9.853,
+    10.4
+   ],
+   "bpm": [
+    26.081,
+    25.415,
+    26.815
+   ],
+   "fpm": 0.013,
+   "switches": 1.03,
+   "retained": 0.828
+  },
+  {
+   "scenario": "shrink",
+   "severity": 0.95,
+   "system": "truth_switch",
+   "cpm": [
+    12.16,
+    11.907,
+    12.427
+   ],
+   "bpm": [
+    31.269,
+    30.594,
+    31.95
+   ],
+   "fpm": 0.027,
+   "switches": 1.0,
+   "retained": 0.996
+  },
+  {
+   "scenario": "shrink",
+   "severity": 0.95,
+   "system": "residual",
+   "cpm": [
+    11.613,
+    11.373,
+    11.867
+   ],
+   "bpm": [
+    29.859,
+    29.169,
+    30.56
+   ],
+   "fpm": 0.027,
+   "switches": 1.0,
+   "retained": 0.951
+  },
+  {
+   "scenario": "jitter",
+   "severity": 0.0,
+   "system": "fixed",
+   "cpm": [
+    12.227,
+    11.96,
+    12.493
+   ],
+   "bpm": [
+    31.606,
+    30.917,
+    32.295
+   ],
+   "fpm": 0.0,
+   "switches": 0.0,
+   "retained": 1.0
+  },
+  {
+   "scenario": "jitter",
+   "severity": 0.0,
+   "system": "threshold",
+   "cpm": [
+    12.227,
+    11.96,
+    12.493
+   ],
+   "bpm": [
+    31.606,
+    30.917,
+    32.295
+   ],
+   "fpm": 0.0,
+   "switches": 0.0,
+   "retained": 1.0
+  },
+  {
+   "scenario": "jitter",
+   "severity": 0.0,
+   "system": "hysteresis",
+   "cpm": [
+    12.227,
+    11.96,
+    12.493
+   ],
+   "bpm": [
+    31.606,
+    30.917,
+    32.295
+   ],
+   "fpm": 0.0,
+   "switches": 0.0,
+   "retained": 1.0
+  },
+  {
+   "scenario": "jitter",
+   "severity": 0.0,
+   "system": "truth_switch",
+   "cpm": [
+    12.213,
+    11.96,
+    12.48
+   ],
+   "bpm": [
+    31.571,
+    30.917,
+    32.261
+   ],
+   "fpm": 0.0,
+   "switches": 0.0,
+   "retained": 1.0
+  },
+  {
+   "scenario": "jitter",
+   "severity": 0.0,
+   "system": "residual",
+   "cpm": [
+    12.213,
+    11.96,
+    12.48
+   ],
+   "bpm": [
+    31.571,
+    30.917,
+    32.261
+   ],
+   "fpm": 0.0,
+   "switches": 0.0,
+   "retained": 1.0
+  },
+  {
+   "scenario": "jitter",
+   "severity": 0.5,
+   "system": "fixed",
+   "cpm": [
+    12.2,
+    11.947,
+    12.453
+   ],
+   "bpm": [
+    31.537,
+    30.882,
+    32.192
+   ],
+   "fpm": 0.0,
+   "switches": 0.0,
+   "retained": 0.998
+  },
+  {
+   "scenario": "jitter",
+   "severity": 0.5,
+   "system": "threshold",
+   "cpm": [
+    12.12,
+    11.84,
+    12.413
+   ],
+   "bpm": [
+    31.249,
+    30.502,
+    32.02
+   ],
+   "fpm": 0.013,
+   "switches": 0.77,
+   "retained": 0.991
+  },
+  {
+   "scenario": "jitter",
+   "severity": 0.5,
+   "system": "hysteresis",
+   "cpm": [
+    12.12,
+    11.84,
+    12.413
+   ],
+   "bpm": [
+    31.249,
+    30.502,
+    32.02
+   ],
+   "fpm": 0.013,
+   "switches": 0.7,
+   "retained": 0.991
+  },
+  {
+   "scenario": "jitter",
+   "severity": 0.5,
+   "system": "truth_switch",
+   "cpm": [
+    12.187,
+    11.92,
+    12.48
+   ],
+   "bpm": [
+    31.421,
+    30.697,
+    32.202
+   ],
+   "fpm": 0.013,
+   "switches": 1.0,
+   "retained": 0.998
+  },
+  {
+   "scenario": "jitter",
+   "severity": 0.5,
+   "system": "residual",
+   "cpm": [
+    12.2,
+    11.947,
+    12.453
+   ],
+   "bpm": [
+    31.537,
+    30.882,
+    32.192
+   ],
+   "fpm": 0.0,
+   "switches": 0.0,
+   "retained": 0.999
+  },
+  {
+   "scenario": "jitter",
+   "severity": 0.8,
+   "system": "fixed",
+   "cpm": [
+    12.133,
+    11.867,
+    12.4
+   ],
+   "bpm": [
+    31.365,
+    30.675,
+    32.054
+   ],
+   "fpm": 0.0,
+   "switches": 0.0,
+   "retained": 0.992
+  },
+  {
+   "scenario": "jitter",
+   "severity": 0.8,
+   "system": "threshold",
+   "cpm": [
+    12.16,
+    11.893,
+    12.44
+   ],
+   "bpm": [
+    31.353,
+    30.627,
+    32.088
+   ],
+   "fpm": 0.013,
+   "switches": 1.17,
+   "retained": 0.995
+  },
+  {
+   "scenario": "jitter",
+   "severity": 0.8,
+   "system": "hysteresis",
+   "cpm": [
+    12.16,
+    11.893,
+    12.44
+   ],
+   "bpm": [
+    31.353,
+    30.627,
+    32.088
+   ],
+   "fpm": 0.013,
+   "switches": 1.1,
+   "retained": 0.995
+  },
+  {
+   "scenario": "jitter",
+   "severity": 0.8,
+   "system": "truth_switch",
+   "cpm": [
+    12.187,
+    11.907,
+    12.48
+   ],
+   "bpm": [
+    31.421,
+    30.663,
+    32.18
+   ],
+   "fpm": 0.013,
+   "switches": 1.0,
+   "retained": 0.998
+  },
+  {
+   "scenario": "jitter",
+   "severity": 0.8,
+   "system": "residual",
+   "cpm": [
+    11.707,
+    11.44,
+    11.987
+   ],
+   "bpm": [
+    30.18,
+    29.49,
+    30.89
+   ],
+   "fpm": 0.013,
+   "switches": 0.9,
+   "retained": 0.959
+  },
+  {
+   "scenario": "jitter",
+   "severity": 0.95,
+   "system": "fixed",
+   "cpm": [
+    11.827,
+    11.547,
+    12.12
+   ],
+   "bpm": [
+    30.572,
+    29.848,
+    31.33
+   ],
+   "fpm": 0.0,
+   "switches": 0.0,
+   "retained": 0.967
+  },
+  {
+   "scenario": "jitter",
+   "severity": 0.95,
+   "system": "threshold",
+   "cpm": [
+    12.12,
+    11.84,
+    12.4
+   ],
+   "bpm": [
+    31.249,
+    30.502,
+    32.019
+   ],
+   "fpm": 0.013,
+   "switches": 1.17,
+   "retained": 0.991
+  },
+  {
+   "scenario": "jitter",
+   "severity": 0.95,
+   "system": "hysteresis",
+   "cpm": [
+    12.12,
+    11.84,
+    12.4
+   ],
+   "bpm": [
+    31.249,
+    30.502,
+    32.019
+   ],
+   "fpm": 0.013,
+   "switches": 1.13,
+   "retained": 0.991
+  },
+  {
+   "scenario": "jitter",
+   "severity": 0.95,
+   "system": "truth_switch",
+   "cpm": [
+    12.16,
+    11.907,
+    12.427
+   ],
+   "bpm": [
+    31.434,
+    30.779,
+    32.123
+   ],
+   "fpm": 0.0,
+   "switches": 1.0,
+   "retained": 0.996
+  },
+  {
+   "scenario": "jitter",
+   "severity": 0.95,
+   "system": "residual",
+   "cpm": [
+    11.547,
+    11.28,
+    11.827
+   ],
+   "bpm": [
+    29.686,
+    28.974,
+    30.41
+   ],
+   "fpm": 0.027,
+   "switches": 1.0,
+   "retained": 0.945
+  },
+  {
+   "scenario": "dropout",
+   "severity": 0.0,
+   "system": "fixed",
+   "cpm": [
+    12.227,
+    11.96,
+    12.493
+   ],
+   "bpm": [
+    31.606,
+    30.917,
+    32.295
+   ],
+   "fpm": 0.0,
+   "switches": 0.0,
+   "retained": 1.0
+  },
+  {
+   "scenario": "dropout",
+   "severity": 0.0,
+   "system": "threshold",
+   "cpm": [
+    12.227,
+    11.96,
+    12.493
+   ],
+   "bpm": [
+    31.606,
+    30.917,
+    32.295
+   ],
+   "fpm": 0.0,
+   "switches": 0.0,
+   "retained": 1.0
+  },
+  {
+   "scenario": "dropout",
+   "severity": 0.0,
+   "system": "hysteresis",
+   "cpm": [
+    12.227,
+    11.96,
+    12.493
+   ],
+   "bpm": [
+    31.606,
+    30.917,
+    32.295
+   ],
+   "fpm": 0.0,
+   "switches": 0.0,
+   "retained": 1.0
+  },
+  {
+   "scenario": "dropout",
+   "severity": 0.0,
+   "system": "truth_switch",
+   "cpm": [
+    12.213,
+    11.96,
+    12.48
+   ],
+   "bpm": [
+    31.571,
+    30.917,
+    32.261
+   ],
+   "fpm": 0.0,
+   "switches": 0.0,
+   "retained": 1.0
+  },
+  {
+   "scenario": "dropout",
+   "severity": 0.0,
+   "system": "residual",
+   "cpm": [
+    12.213,
+    11.96,
+    12.48
+   ],
+   "bpm": [
+    31.571,
+    30.917,
+    32.261
+   ],
+   "fpm": 0.0,
+   "switches": 0.0,
+   "retained": 1.0
+  },
+  {
+   "scenario": "dropout",
+   "severity": 0.5,
+   "system": "fixed",
+   "cpm": [
+    12.013,
+    11.76,
+    12.28
+   ],
+   "bpm": [
+    31.054,
+    30.4,
+    31.744
+   ],
+   "fpm": 0.0,
+   "switches": 0.0,
+   "retained": 0.983
+  },
+  {
+   "scenario": "dropout",
+   "severity": 0.5,
+   "system": "threshold",
+   "cpm": [
+    12.013,
+    11.76,
+    12.28
+   ],
+   "bpm": [
+    31.054,
+    30.4,
+    31.744
+   ],
+   "fpm": 0.0,
+   "switches": 0.0,
+   "retained": 0.983
+  },
+  {
+   "scenario": "dropout",
+   "severity": 0.5,
+   "system": "hysteresis",
+   "cpm": [
+    12.013,
+    11.76,
+    12.28
+   ],
+   "bpm": [
+    31.054,
+    30.4,
+    31.744
+   ],
+   "fpm": 0.0,
+   "switches": 0.0,
+   "retained": 0.983
+  },
+  {
+   "scenario": "dropout",
+   "severity": 0.5,
+   "system": "truth_switch",
+   "cpm": [
+    12.187,
+    11.907,
+    12.48
+   ],
+   "bpm": [
+    31.422,
+    30.663,
+    32.226
+   ],
+   "fpm": 0.013,
+   "switches": 1.0,
+   "retained": 0.998
+  },
+  {
+   "scenario": "dropout",
+   "severity": 0.5,
+   "system": "residual",
+   "cpm": [
+    12.093,
+    11.84,
+    12.347
+   ],
+   "bpm": [
+    31.261,
+    30.606,
+    31.916
+   ],
+   "fpm": 0.0,
+   "switches": 0.0,
+   "retained": 0.99
+  },
+  {
+   "scenario": "dropout",
+   "severity": 0.8,
+   "system": "fixed",
+   "cpm": [
+    11.28,
+    10.947,
+    11.6
+   ],
+   "bpm": [
+    29.159,
+    28.297,
+    29.986
+   ],
+   "fpm": 0.0,
+   "switches": 0.0,
+   "retained": 0.923
+  },
+  {
+   "scenario": "dropout",
+   "severity": 0.8,
+   "system": "threshold",
+   "cpm": [
+    11.36,
+    11.067,
+    11.653
+   ],
+   "bpm": [
+    29.366,
+    28.607,
+    30.124
+   ],
+   "fpm": 0.0,
+   "switches": 0.07,
+   "retained": 0.929
+  },
+  {
+   "scenario": "dropout",
+   "severity": 0.8,
+   "system": "hysteresis",
+   "cpm": [
+    11.36,
+    11.067,
+    11.653
+   ],
+   "bpm": [
+    29.366,
+    28.607,
+    30.124
+   ],
+   "fpm": 0.0,
+   "switches": 0.07,
+   "retained": 0.929
+  },
+  {
+   "scenario": "dropout",
+   "severity": 0.8,
+   "system": "truth_switch",
+   "cpm": [
+    12.2,
+    11.907,
+    12.493
+   ],
+   "bpm": [
+    31.456,
+    30.686,
+    32.237
+   ],
+   "fpm": 0.013,
+   "switches": 1.0,
+   "retained": 0.999
+  },
+  {
+   "scenario": "dropout",
+   "severity": 0.8,
+   "system": "residual",
+   "cpm": [
+    11.507,
+    11.187,
+    11.84
+   ],
+   "bpm": [
+    29.667,
+    28.761,
+    30.554
+   ],
+   "fpm": 0.013,
+   "switches": 1.0,
+   "retained": 0.942
+  },
+  {
+   "scenario": "dropout",
+   "severity": 0.95,
+   "system": "fixed",
+   "cpm": [
+    10.36,
+    10.08,
+    10.667
+   ],
+   "bpm": [
+    26.781,
+    26.057,
+    27.573
+   ],
+   "fpm": 0.0,
+   "switches": 0.0,
+   "retained": 0.847
+  },
+  {
+   "scenario": "dropout",
+   "severity": 0.95,
+   "system": "threshold",
+   "cpm": [
+    10.467,
+    10.213,
+    10.747
+   ],
+   "bpm": [
+    27.056,
+    26.401,
+    27.78
+   ],
+   "fpm": 0.0,
+   "switches": 0.43,
+   "retained": 0.856
+  },
+  {
+   "scenario": "dropout",
+   "severity": 0.95,
+   "system": "hysteresis",
+   "cpm": [
+    10.467,
+    10.213,
+    10.747
+   ],
+   "bpm": [
+    27.056,
+    26.401,
+    27.78
+   ],
+   "fpm": 0.0,
+   "switches": 0.43,
+   "retained": 0.856
+  },
+  {
+   "scenario": "dropout",
+   "severity": 0.95,
+   "system": "truth_switch",
+   "cpm": [
+    12.16,
+    11.893,
+    12.427
+   ],
+   "bpm": [
+    31.27,
+    30.548,
+    31.957
+   ],
+   "fpm": 0.027,
+   "switches": 1.0,
+   "retained": 0.996
+  },
+  {
+   "scenario": "dropout",
+   "severity": 0.95,
+   "system": "residual",
+   "cpm": [
+    11.52,
+    11.227,
+    11.813
+   ],
+   "bpm": [
+    29.542,
+    28.674,
+    30.403
+   ],
+   "fpm": 0.04,
+   "switches": 1.0,
+   "retained": 0.943
+  },
+  {
+   "scenario": "fatigue",
+   "severity": 0.0,
+   "system": "fixed",
+   "cpm": [
+    12.227,
+    11.96,
+    12.493
+   ],
+   "bpm": [
+    31.606,
+    30.917,
+    32.295
+   ],
+   "fpm": 0.0,
+   "switches": 0.0,
+   "retained": 1.0
+  },
+  {
+   "scenario": "fatigue",
+   "severity": 0.0,
+   "system": "threshold",
+   "cpm": [
+    12.227,
+    11.96,
+    12.493
+   ],
+   "bpm": [
+    31.606,
+    30.917,
+    32.295
+   ],
+   "fpm": 0.0,
+   "switches": 0.0,
+   "retained": 1.0
+  },
+  {
+   "scenario": "fatigue",
+   "severity": 0.0,
+   "system": "hysteresis",
+   "cpm": [
+    12.227,
+    11.96,
+    12.493
+   ],
+   "bpm": [
+    31.606,
+    30.917,
+    32.295
+   ],
+   "fpm": 0.0,
+   "switches": 0.0,
+   "retained": 1.0
+  },
+  {
+   "scenario": "fatigue",
+   "severity": 0.0,
+   "system": "truth_switch",
+   "cpm": [
+    12.213,
+    11.96,
+    12.48
+   ],
+   "bpm": [
+    31.571,
+    30.917,
+    32.261
+   ],
+   "fpm": 0.0,
+   "switches": 0.0,
+   "retained": 1.0
+  },
+  {
+   "scenario": "fatigue",
+   "severity": 0.0,
+   "system": "residual",
+   "cpm": [
+    12.213,
+    11.96,
+    12.48
+   ],
+   "bpm": [
+    31.571,
+    30.917,
+    32.261
+   ],
+   "fpm": 0.0,
+   "switches": 0.0,
+   "retained": 1.0
+  },
+  {
+   "scenario": "fatigue",
+   "severity": 0.5,
+   "system": "fixed",
+   "cpm": [
+    11.973,
+    11.72,
+    12.24
+   ],
+   "bpm": [
+    30.951,
+    30.296,
+    31.64
+   ],
+   "fpm": 0.0,
+   "switches": 0.0,
+   "retained": 0.979
+  },
+  {
+   "scenario": "fatigue",
+   "severity": 0.5,
+   "system": "threshold",
+   "cpm": [
+    11.973,
+    11.72,
+    12.24
+   ],
+   "bpm": [
+    30.951,
+    30.296,
+    31.64
+   ],
+   "fpm": 0.0,
+   "switches": 0.0,
+   "retained": 0.979
+  },
+  {
+   "scenario": "fatigue",
+   "severity": 0.5,
+   "system": "hysteresis",
+   "cpm": [
+    11.973,
+    11.72,
+    12.24
+   ],
+   "bpm": [
+    30.951,
+    30.296,
+    31.64
+   ],
+   "fpm": 0.0,
+   "switches": 0.0,
+   "retained": 0.979
+  },
+  {
+   "scenario": "fatigue",
+   "severity": 0.5,
+   "system": "truth_switch",
+   "cpm": [
+    11.987,
+    11.707,
+    12.253
+   ],
+   "bpm": [
+    30.905,
+    30.157,
+    31.64
+   ],
+   "fpm": 0.013,
+   "switches": 1.0,
+   "retained": 0.981
+  },
+  {
+   "scenario": "fatigue",
+   "severity": 0.5,
+   "system": "residual",
+   "cpm": [
+    12.187,
+    11.933,
+    12.453
+   ],
+   "bpm": [
+    31.502,
+    30.848,
+    32.192
+   ],
+   "fpm": 0.0,
+   "switches": 0.0,
+   "retained": 0.998
+  },
+  {
+   "scenario": "fatigue",
+   "severity": 0.8,
+   "system": "fixed",
+   "cpm": [
+    5.24,
+    5.08,
+    5.4
+   ],
+   "bpm": [
+    13.545,
+    13.132,
+    13.959
+   ],
+   "fpm": 0.0,
+   "switches": 0.0,
+   "retained": 0.429
+  },
+  {
+   "scenario": "fatigue",
+   "severity": 0.8,
+   "system": "threshold",
+   "cpm": [
+    10.213,
+    9.92,
+    10.533
+   ],
+   "bpm": [
+    26.401,
+    25.643,
+    27.229
+   ],
+   "fpm": 0.0,
+   "switches": 1.1,
+   "retained": 0.835
+  },
+  {
+   "scenario": "fatigue",
+   "severity": 0.8,
+   "system": "hysteresis",
+   "cpm": [
+    10.227,
+    9.933,
+    10.547
+   ],
+   "bpm": [
+    26.356,
+    25.588,
+    27.194
+   ],
+   "fpm": 0.013,
+   "switches": 1.07,
+   "retained": 0.836
+  },
+  {
+   "scenario": "fatigue",
+   "severity": 0.8,
+   "system": "truth_switch",
+   "cpm": [
+    12.0,
+    11.72,
+    12.28
+   ],
+   "bpm": [
+    30.856,
+    30.121,
+    31.578
+   ],
+   "fpm": 0.027,
+   "switches": 1.0,
+   "retained": 0.983
+  },
+  {
+   "scenario": "fatigue",
+   "severity": 0.8,
+   "system": "residual",
+   "cpm": [
+    10.107,
+    9.84,
+    10.387
+   ],
+   "bpm": [
+    25.584,
+    24.723,
+    26.463
+   ],
+   "fpm": 0.093,
+   "switches": 1.0,
+   "retained": 0.828
+  },
+  {
+   "scenario": "fatigue",
+   "severity": 0.95,
+   "system": "fixed",
+   "cpm": [
+    5.24,
+    5.08,
+    5.4
+   ],
+   "bpm": [
+    13.545,
+    13.132,
+    13.959
+   ],
+   "fpm": 0.0,
+   "switches": 0.0,
+   "retained": 0.429
+  },
+  {
+   "scenario": "fatigue",
+   "severity": 0.95,
+   "system": "threshold",
+   "cpm": [
+    10.213,
+    9.92,
+    10.533
+   ],
+   "bpm": [
+    26.401,
+    25.643,
+    27.229
+   ],
+   "fpm": 0.0,
+   "switches": 1.1,
+   "retained": 0.835
+  },
+  {
+   "scenario": "fatigue",
+   "severity": 0.95,
+   "system": "hysteresis",
+   "cpm": [
+    10.227,
+    9.933,
+    10.547
+   ],
+   "bpm": [
+    26.356,
+    25.588,
+    27.194
+   ],
+   "fpm": 0.013,
+   "switches": 1.07,
+   "retained": 0.836
+  },
+  {
+   "scenario": "fatigue",
+   "severity": 0.95,
+   "system": "truth_switch",
+   "cpm": [
+    12.0,
+    11.72,
+    12.267
+   ],
+   "bpm": [
+    30.856,
+    30.154,
+    31.558
+   ],
+   "fpm": 0.027,
+   "switches": 1.0,
+   "retained": 0.983
+  },
+  {
+   "scenario": "fatigue",
+   "severity": 0.95,
+   "system": "residual",
+   "cpm": [
+    9.973,
+    9.693,
+    10.253
+   ],
+   "bpm": [
+    25.393,
+    24.601,
+    26.222
+   ],
+   "fpm": 0.067,
+   "switches": 1.0,
+   "retained": 0.817
+  },
+  {
+   "scenario": "multi",
+   "severity": 0.0,
+   "system": "fixed",
+   "cpm": [
+    12.227,
+    11.96,
+    12.493
+   ],
+   "bpm": [
+    31.606,
+    30.917,
+    32.295
+   ],
+   "fpm": 0.0,
+   "switches": 0.0,
+   "retained": 1.0
+  },
+  {
+   "scenario": "multi",
+   "severity": 0.0,
+   "system": "threshold",
+   "cpm": [
+    12.227,
+    11.96,
+    12.493
+   ],
+   "bpm": [
+    31.606,
+    30.917,
+    32.295
+   ],
+   "fpm": 0.0,
+   "switches": 0.0,
+   "retained": 1.0
+  },
+  {
+   "scenario": "multi",
+   "severity": 0.0,
+   "system": "hysteresis",
+   "cpm": [
+    12.227,
+    11.96,
+    12.493
+   ],
+   "bpm": [
+    31.606,
+    30.917,
+    32.295
+   ],
+   "fpm": 0.0,
+   "switches": 0.0,
+   "retained": 1.0
+  },
+  {
+   "scenario": "multi",
+   "severity": 0.0,
+   "system": "truth_switch",
+   "cpm": [
+    12.213,
+    11.96,
+    12.48
+   ],
+   "bpm": [
+    31.571,
+    30.917,
+    32.261
+   ],
+   "fpm": 0.0,
+   "switches": 0.0,
+   "retained": 1.0
+  },
+  {
+   "scenario": "multi",
+   "severity": 0.0,
+   "system": "residual",
+   "cpm": [
+    12.213,
+    11.96,
+    12.48
+   ],
+   "bpm": [
+    31.571,
+    30.917,
+    32.261
+   ],
+   "fpm": 0.0,
+   "switches": 0.0,
+   "retained": 1.0
+  },
+  {
+   "scenario": "multi",
+   "severity": 0.5,
+   "system": "fixed",
+   "cpm": [
+    12.187,
+    11.933,
+    12.453
+   ],
+   "bpm": [
+    31.502,
+    30.848,
+    32.192
+   ],
+   "fpm": 0.0,
+   "switches": 0.0,
+   "retained": 0.997
+  },
+  {
+   "scenario": "multi",
+   "severity": 0.5,
+   "system": "threshold",
+   "cpm": [
+    12.12,
+    11.867,
+    12.373
+   ],
+   "bpm": [
+    31.33,
+    30.675,
+    31.985
+   ],
+   "fpm": 0.0,
+   "switches": 0.5,
+   "retained": 0.991
+  },
+  {
+   "scenario": "multi",
+   "severity": 0.5,
+   "system": "hysteresis",
+   "cpm": [
+    12.133,
+    11.88,
+    12.387
+   ],
+   "bpm": [
+    31.365,
+    30.71,
+    32.019
+   ],
+   "fpm": 0.0,
+   "switches": 0.4,
+   "retained": 0.992
+  },
+  {
+   "scenario": "multi",
+   "severity": 0.5,
+   "system": "truth_switch",
+   "cpm": [
+    12.187,
+    11.933,
+    12.453
+   ],
+   "bpm": [
+    31.502,
+    30.848,
+    32.192
+   ],
+   "fpm": 0.0,
+   "switches": 0.0,
+   "retained": 0.998
+  },
+  {
+   "scenario": "multi",
+   "severity": 0.5,
+   "system": "residual",
+   "cpm": [
+    12.187,
+    11.933,
+    12.453
+   ],
+   "bpm": [
+    31.502,
+    30.848,
+    32.192
+   ],
+   "fpm": 0.0,
+   "switches": 0.0,
+   "retained": 0.998
+  },
+  {
+   "scenario": "multi",
+   "severity": 0.8,
+   "system": "fixed",
+   "cpm": [
+    12.067,
+    11.813,
+    12.333
+   ],
+   "bpm": [
+    31.192,
+    30.537,
+    31.882
+   ],
+   "fpm": 0.0,
+   "switches": 0.0,
+   "retained": 0.987
+  },
+  {
+   "scenario": "multi",
+   "severity": 0.8,
+   "system": "threshold",
+   "cpm": [
+    11.84,
+    11.627,
+    12.053
+   ],
+   "bpm": [
+    30.606,
+    30.055,
+    31.158
+   ],
+   "fpm": 0.0,
+   "switches": 2.0,
+   "retained": 0.968
+  },
+  {
+   "scenario": "multi",
+   "severity": 0.8,
+   "system": "hysteresis",
+   "cpm": [
+    11.787,
+    11.507,
+    12.067
+   ],
+   "bpm": [
+    30.469,
+    29.745,
+    31.192
+   ],
+   "fpm": 0.0,
+   "switches": 1.93,
+   "retained": 0.964
+  },
+  {
+   "scenario": "multi",
+   "severity": 0.8,
+   "system": "truth_switch",
+   "cpm": [
+    11.973,
+    11.707,
+    12.227
+   ],
+   "bpm": [
+    30.951,
+    30.262,
+    31.606
+   ],
+   "fpm": 0.0,
+   "switches": 0.0,
+   "retained": 0.98
+  },
+  {
+   "scenario": "multi",
+   "severity": 0.8,
+   "system": "residual",
+   "cpm": [
+    11.533,
+    11.293,
+    11.787
+   ],
+   "bpm": [
+    29.734,
+    29.034,
+    30.434
+   ],
+   "fpm": 0.013,
+   "switches": 1.07,
+   "retained": 0.944
+  },
+  {
+   "scenario": "multi",
+   "severity": 0.95,
+   "system": "fixed",
+   "cpm": [
+    11.813,
+    11.587,
+    12.04
+   ],
+   "bpm": [
+    30.537,
+    29.952,
+    31.123
+   ],
+   "fpm": 0.0,
+   "switches": 0.0,
+   "retained": 0.966
+  },
+  {
+   "scenario": "multi",
+   "severity": 0.95,
+   "system": "threshold",
+   "cpm": [
+    11.253,
+    10.947,
+    11.573
+   ],
+   "bpm": [
+    29.09,
+    28.297,
+    29.917
+   ],
+   "fpm": 0.0,
+   "switches": 2.5,
+   "retained": 0.92
+  },
+  {
+   "scenario": "multi",
+   "severity": 0.95,
+   "system": "hysteresis",
+   "cpm": [
+    11.507,
+    11.293,
+    11.747
+   ],
+   "bpm": [
+    29.745,
+    29.193,
+    30.365
+   ],
+   "fpm": 0.0,
+   "switches": 2.1,
+   "retained": 0.941
+  },
+  {
+   "scenario": "multi",
+   "severity": 0.95,
+   "system": "truth_switch",
+   "cpm": [
+    11.2,
+    10.96,
+    11.44
+   ],
+   "bpm": [
+    28.952,
+    28.332,
+    29.572
+   ],
+   "fpm": 0.0,
+   "switches": 0.0,
+   "retained": 0.917
+  },
+  {
+   "scenario": "multi",
+   "severity": 0.95,
+   "system": "residual",
+   "cpm": [
+    10.707,
+    10.4,
+    11.027
+   ],
+   "bpm": [
+    27.599,
+    26.764,
+    28.469
+   ],
+   "fpm": 0.013,
+   "switches": 1.23,
+   "retained": 0.877
+  }
+ ],
+ "paired": [
+  {
+   "scenario": "fatigue",
+   "severity": 0.95,
+   "baseline": "fixed",
+   "diff": 4.733,
+   "lo": 4.507,
+   "hi": 4.96,
+   "n": 30,
+   "win": 1.0,
+   "loss": 0.0
+  },
+  {
+   "scenario": "fatigue",
+   "severity": 0.95,
+   "baseline": "threshold",
+   "diff": -0.24,
+   "lo": -0.613,
+   "hi": 0.12,
+   "n": 30,
+   "win": 0.367,
+   "loss": 0.5
+  },
+  {
+   "scenario": "fatigue",
+   "severity": 0.95,
+   "baseline": "hysteresis",
+   "diff": -0.253,
+   "lo": -0.627,
+   "hi": 0.107,
+   "n": 30,
+   "win": 0.367,
+   "loss": 0.5
+  },
+  {
+   "scenario": "fatigue",
+   "severity": 0.95,
+   "baseline": "truth_switch",
+   "diff": -2.027,
+   "lo": -2.373,
+   "hi": -1.693,
+   "n": 30,
+   "win": 0.033,
+   "loss": 0.967
+  },
+  {
+   "scenario": "multi",
+   "severity": 0.0,
+   "baseline": "fixed",
+   "diff": -0.013,
+   "lo": -0.04,
+   "hi": 0.0,
+   "n": 30,
+   "win": 0.0,
+   "loss": 0.033
+  },
+  {
+   "scenario": "multi",
+   "severity": 0.0,
+   "baseline": "threshold",
+   "diff": -0.013,
+   "lo": -0.04,
+   "hi": 0.0,
+   "n": 30,
+   "win": 0.0,
+   "loss": 0.033
+  },
+  {
+   "scenario": "multi",
+   "severity": 0.0,
+   "baseline": "hysteresis",
+   "diff": -0.013,
+   "lo": -0.04,
+   "hi": 0.0,
+   "n": 30,
+   "win": 0.0,
+   "loss": 0.033
+  },
+  {
+   "scenario": "multi",
+   "severity": 0.0,
+   "baseline": "truth_switch",
+   "diff": 0.0,
+   "lo": 0.0,
+   "hi": 0.0,
+   "n": 30,
+   "win": 0.0,
+   "loss": 0.0
+  },
+  {
+   "scenario": "multi",
+   "severity": 0.5,
+   "baseline": "fixed",
+   "diff": 0.0,
+   "lo": 0.0,
+   "hi": 0.0,
+   "n": 30,
+   "win": 0.0,
+   "loss": 0.0
+  },
+  {
+   "scenario": "multi",
+   "severity": 0.5,
+   "baseline": "threshold",
+   "diff": 0.067,
+   "lo": 0.0,
+   "hi": 0.187,
+   "n": 30,
+   "win": 0.067,
+   "loss": 0.0
+  },
+  {
+   "scenario": "multi",
+   "severity": 0.5,
+   "baseline": "hysteresis",
+   "diff": 0.053,
+   "lo": 0.0,
+   "hi": 0.147,
+   "n": 30,
+   "win": 0.067,
+   "loss": 0.0
+  },
+  {
+   "scenario": "multi",
+   "severity": 0.5,
+   "baseline": "truth_switch",
+   "diff": 0.0,
+   "lo": 0.0,
+   "hi": 0.0,
+   "n": 30,
+   "win": 0.0,
+   "loss": 0.0
+  },
+  {
+   "scenario": "dropout",
+   "severity": 0.8,
+   "baseline": "fixed",
+   "diff": 0.227,
+   "lo": -0.107,
+   "hi": 0.6,
+   "n": 30,
+   "win": 0.367,
+   "loss": 0.4
+  },
+  {
+   "scenario": "dropout",
+   "severity": 0.8,
+   "baseline": "threshold",
+   "diff": 0.147,
+   "lo": -0.147,
+   "hi": 0.467,
+   "n": 30,
+   "win": 0.367,
+   "loss": 0.4
+  },
+  {
+   "scenario": "dropout",
+   "severity": 0.8,
+   "baseline": "hysteresis",
+   "diff": 0.147,
+   "lo": -0.147,
+   "hi": 0.467,
+   "n": 30,
+   "win": 0.367,
+   "loss": 0.4
+  },
+  {
+   "scenario": "dropout",
+   "severity": 0.8,
+   "baseline": "truth_switch",
+   "diff": -0.693,
+   "lo": -0.893,
+   "hi": -0.52,
+   "n": 30,
+   "win": 0.0,
+   "loss": 0.8
+  },
+  {
+   "scenario": "dropout",
+   "severity": 0.95,
+   "baseline": "fixed",
+   "diff": 1.16,
+   "lo": 0.893,
+   "hi": 1.427,
+   "n": 30,
+   "win": 0.933,
+   "loss": 0.033
+  },
+  {
+   "scenario": "dropout",
+   "severity": 0.95,
+   "baseline": "threshold",
+   "diff": 1.053,
+   "lo": 0.813,
+   "hi": 1.293,
+   "n": 30,
+   "win": 0.9,
+   "loss": 0.033
+  },
+  {
+   "scenario": "dropout",
+   "severity": 0.95,
+   "baseline": "hysteresis",
+   "diff": 1.053,
+   "lo": 0.813,
+   "hi": 1.293,
+   "n": 30,
+   "win": 0.9,
+   "loss": 0.033
+  },
+  {
+   "scenario": "dropout",
+   "severity": 0.95,
+   "baseline": "truth_switch",
+   "diff": -0.64,
+   "lo": -0.827,
+   "hi": -0.467,
+   "n": 30,
+   "win": 0.033,
+   "loss": 0.8
+  },
+  {
+   "scenario": "jitter",
+   "severity": 0.8,
+   "baseline": "fixed",
+   "diff": -0.427,
+   "lo": -0.573,
+   "hi": -0.28,
+   "n": 30,
+   "win": 0.067,
+   "loss": 0.733
+  },
+  {
+   "scenario": "jitter",
+   "severity": 0.8,
+   "baseline": "threshold",
+   "diff": -0.453,
+   "lo": -0.627,
+   "hi": -0.267,
+   "n": 30,
+   "win": 0.067,
+   "loss": 0.767
+  },
+  {
+   "scenario": "jitter",
+   "severity": 0.8,
+   "baseline": "hysteresis",
+   "diff": -0.453,
+   "lo": -0.627,
+   "hi": -0.267,
+   "n": 30,
+   "win": 0.067,
+   "loss": 0.767
+  },
+  {
+   "scenario": "jitter",
+   "severity": 0.8,
+   "baseline": "truth_switch",
+   "diff": -0.48,
+   "lo": -0.627,
+   "hi": -0.333,
+   "n": 30,
+   "win": 0.1,
+   "loss": 0.8
+  },
+  {
+   "scenario": "shrink",
+   "severity": 0.5,
+   "baseline": "fixed",
+   "diff": 0.12,
+   "lo": 0.053,
+   "hi": 0.187,
+   "n": 30,
+   "win": 0.3,
+   "loss": 0.0
+  },
+  {
+   "scenario": "shrink",
+   "severity": 0.5,
+   "baseline": "threshold",
+   "diff": 0.12,
+   "lo": 0.053,
+   "hi": 0.187,
+   "n": 30,
+   "win": 0.3,
+   "loss": 0.0
+  },
+  {
+   "scenario": "shrink",
+   "severity": 0.5,
+   "baseline": "hysteresis",
+   "diff": 0.12,
+   "lo": 0.053,
+   "hi": 0.187,
+   "n": 30,
+   "win": 0.3,
+   "loss": 0.0
+  },
+  {
+   "scenario": "shrink",
+   "severity": 0.5,
+   "baseline": "truth_switch",
+   "diff": 0.04,
+   "lo": -0.213,
+   "hi": 0.307,
+   "n": 30,
+   "win": 0.1,
+   "loss": 0.1
+  },
+  {
+   "scenario": "shrink",
+   "severity": 0.0,
+   "baseline": "fixed",
+   "diff": -0.013,
+   "lo": -0.04,
+   "hi": 0.0,
+   "n": 30,
+   "win": 0.0,
+   "loss": 0.033
+  },
+  {
+   "scenario": "shrink",
+   "severity": 0.0,
+   "baseline": "threshold",
+   "diff": -0.013,
+   "lo": -0.04,
+   "hi": 0.0,
+   "n": 30,
+   "win": 0.0,
+   "loss": 0.033
+  },
+  {
+   "scenario": "shrink",
+   "severity": 0.0,
+   "baseline": "hysteresis",
+   "diff": -0.013,
+   "lo": -0.04,
+   "hi": 0.0,
+   "n": 30,
+   "win": 0.0,
+   "loss": 0.033
+  },
+  {
+   "scenario": "shrink",
+   "severity": 0.0,
+   "baseline": "truth_switch",
+   "diff": 0.0,
+   "lo": 0.0,
+   "hi": 0.0,
+   "n": 30,
+   "win": 0.0,
+   "loss": 0.0
+  },
+  {
+   "scenario": "jitter",
+   "severity": 0.95,
+   "baseline": "fixed",
+   "diff": -0.28,
+   "lo": -0.467,
+   "hi": -0.107,
+   "n": 30,
+   "win": 0.2,
+   "loss": 0.567
+  },
+  {
+   "scenario": "jitter",
+   "severity": 0.95,
+   "baseline": "threshold",
+   "diff": -0.573,
+   "lo": -0.787,
+   "hi": -0.386,
+   "n": 30,
+   "win": 0.067,
+   "loss": 0.767
+  },
+  {
+   "scenario": "jitter",
+   "severity": 0.95,
+   "baseline": "hysteresis",
+   "diff": -0.573,
+   "lo": -0.787,
+   "hi": -0.386,
+   "n": 30,
+   "win": 0.067,
+   "loss": 0.767
+  },
+  {
+   "scenario": "jitter",
+   "severity": 0.95,
+   "baseline": "truth_switch",
+   "diff": -0.613,
+   "lo": -0.84,
+   "hi": -0.4,
+   "n": 30,
+   "win": 0.033,
+   "loss": 0.8
+  },
+  {
+   "scenario": "fatigue",
+   "severity": 0.5,
+   "baseline": "fixed",
+   "diff": 0.213,
+   "lo": 0.12,
+   "hi": 0.32,
+   "n": 30,
+   "win": 0.433,
+   "loss": 0.0
+  },
+  {
+   "scenario": "fatigue",
+   "severity": 0.5,
+   "baseline": "threshold",
+   "diff": 0.213,
+   "lo": 0.12,
+   "hi": 0.32,
+   "n": 30,
+   "win": 0.433,
+   "loss": 0.0
+  },
+  {
+   "scenario": "fatigue",
+   "severity": 0.5,
+   "baseline": "hysteresis",
+   "diff": 0.213,
+   "lo": 0.12,
+   "hi": 0.32,
+   "n": 30,
+   "win": 0.433,
+   "loss": 0.0
+  },
+  {
+   "scenario": "fatigue",
+   "severity": 0.5,
+   "baseline": "truth_switch",
+   "diff": 0.2,
+   "lo": 0.027,
+   "hi": 0.413,
+   "n": 30,
+   "win": 0.2,
+   "loss": 0.067
+  },
+  {
+   "scenario": "multi",
+   "severity": 0.8,
+   "baseline": "fixed",
+   "diff": -0.533,
+   "lo": -0.707,
+   "hi": -0.373,
+   "n": 30,
+   "win": 0.0,
+   "loss": 0.733
+  },
+  {
+   "scenario": "multi",
+   "severity": 0.8,
+   "baseline": "threshold",
+   "diff": -0.307,
+   "lo": -0.507,
+   "hi": -0.107,
+   "n": 30,
+   "win": 0.133,
+   "loss": 0.6
+  },
+  {
+   "scenario": "multi",
+   "severity": 0.8,
+   "baseline": "hysteresis",
+   "diff": -0.253,
+   "lo": -0.453,
+   "hi": -0.067,
+   "n": 30,
+   "win": 0.167,
+   "loss": 0.533
+  },
+  {
+   "scenario": "multi",
+   "severity": 0.8,
+   "baseline": "truth_switch",
+   "diff": -0.44,
+   "lo": -0.587,
+   "hi": -0.293,
+   "n": 30,
+   "win": 0.0,
+   "loss": 0.667
+  },
+  {
+   "scenario": "fatigue",
+   "severity": 0.0,
+   "baseline": "fixed",
+   "diff": -0.013,
+   "lo": -0.04,
+   "hi": 0.0,
+   "n": 30,
+   "win": 0.0,
+   "loss": 0.033
+  },
+  {
+   "scenario": "fatigue",
+   "severity": 0.0,
+   "baseline": "threshold",
+   "diff": -0.013,
+   "lo": -0.04,
+   "hi": 0.0,
+   "n": 30,
+   "win": 0.0,
+   "loss": 0.033
+  },
+  {
+   "scenario": "fatigue",
+   "severity": 0.0,
+   "baseline": "hysteresis",
+   "diff": -0.013,
+   "lo": -0.04,
+   "hi": 0.0,
+   "n": 30,
+   "win": 0.0,
+   "loss": 0.033
+  },
+  {
+   "scenario": "fatigue",
+   "severity": 0.0,
+   "baseline": "truth_switch",
+   "diff": 0.0,
+   "lo": 0.0,
+   "hi": 0.0,
+   "n": 30,
+   "win": 0.0,
+   "loss": 0.0
+  },
+  {
+   "scenario": "multi",
+   "severity": 0.95,
+   "baseline": "fixed",
+   "diff": -1.107,
+   "lo": -1.387,
+   "hi": -0.84,
+   "n": 30,
+   "win": 0.0,
+   "loss": 0.9
+  },
+  {
+   "scenario": "multi",
+   "severity": 0.95,
+   "baseline": "threshold",
+   "diff": -0.547,
+   "lo": -0.947,
+   "hi": -0.12,
+   "n": 30,
+   "win": 0.267,
+   "loss": 0.567
+  },
+  {
+   "scenario": "multi",
+   "severity": 0.95,
+   "baseline": "hysteresis",
+   "diff": -0.8,
+   "lo": -1.08,
+   "hi": -0.507,
+   "n": 30,
+   "win": 0.1,
+   "loss": 0.633
+  },
+  {
+   "scenario": "multi",
+   "severity": 0.95,
+   "baseline": "truth_switch",
+   "diff": -0.493,
+   "lo": -0.84,
+   "hi": -0.147,
+   "n": 30,
+   "win": 0.133,
+   "loss": 0.567
+  },
+  {
+   "scenario": "dropout",
+   "severity": 0.5,
+   "baseline": "fixed",
+   "diff": 0.08,
+   "lo": 0.013,
+   "hi": 0.147,
+   "n": 30,
+   "win": 0.167,
+   "loss": 0.0
+  },
+  {
+   "scenario": "dropout",
+   "severity": 0.5,
+   "baseline": "threshold",
+   "diff": 0.08,
+   "lo": 0.013,
+   "hi": 0.147,
+   "n": 30,
+   "win": 0.167,
+   "loss": 0.0
+  },
+  {
+   "scenario": "dropout",
+   "severity": 0.5,
+   "baseline": "hysteresis",
+   "diff": 0.08,
+   "lo": 0.013,
+   "hi": 0.147,
+   "n": 30,
+   "win": 0.167,
+   "loss": 0.0
+  },
+  {
+   "scenario": "dropout",
+   "severity": 0.5,
+   "baseline": "truth_switch",
+   "diff": -0.093,
+   "lo": -0.347,
+   "hi": 0.187,
+   "n": 30,
+   "win": 0.1,
+   "loss": 0.367
+  },
+  {
+   "scenario": "dropout",
+   "severity": 0.0,
+   "baseline": "fixed",
+   "diff": -0.013,
+   "lo": -0.04,
+   "hi": 0.0,
+   "n": 30,
+   "win": 0.0,
+   "loss": 0.033
+  },
+  {
+   "scenario": "dropout",
+   "severity": 0.0,
+   "baseline": "threshold",
+   "diff": -0.013,
+   "lo": -0.04,
+   "hi": 0.0,
+   "n": 30,
+   "win": 0.0,
+   "loss": 0.033
+  },
+  {
+   "scenario": "dropout",
+   "severity": 0.0,
+   "baseline": "hysteresis",
+   "diff": -0.013,
+   "lo": -0.04,
+   "hi": 0.0,
+   "n": 30,
+   "win": 0.0,
+   "loss": 0.033
+  },
+  {
+   "scenario": "dropout",
+   "severity": 0.0,
+   "baseline": "truth_switch",
+   "diff": 0.0,
+   "lo": 0.0,
+   "hi": 0.0,
+   "n": 30,
+   "win": 0.0,
+   "loss": 0.0
+  },
+  {
+   "scenario": "shrink",
+   "severity": 0.8,
+   "baseline": "fixed",
+   "diff": 3.573,
+   "lo": 3.306,
+   "hi": 3.84,
+   "n": 30,
+   "win": 1.0,
+   "loss": 0.0
+  },
+  {
+   "scenario": "shrink",
+   "severity": 0.8,
+   "baseline": "threshold",
+   "diff": 1.467,
+   "lo": 1.2,
+   "hi": 1.733,
+   "n": 30,
+   "win": 0.933,
+   "loss": 0.0
+  },
+  {
+   "scenario": "shrink",
+   "severity": 0.8,
+   "baseline": "hysteresis",
+   "diff": 1.467,
+   "lo": 1.2,
+   "hi": 1.733,
+   "n": 30,
+   "win": 0.933,
+   "loss": 0.0
+  },
+  {
+   "scenario": "shrink",
+   "severity": 0.8,
+   "baseline": "truth_switch",
+   "diff": -0.573,
+   "lo": -0.747,
+   "hi": -0.413,
+   "n": 30,
+   "win": 0.0,
+   "loss": 0.8
+  },
+  {
+   "scenario": "jitter",
+   "severity": 0.0,
+   "baseline": "fixed",
+   "diff": -0.013,
+   "lo": -0.04,
+   "hi": 0.0,
+   "n": 30,
+   "win": 0.0,
+   "loss": 0.033
+  },
+  {
+   "scenario": "jitter",
+   "severity": 0.0,
+   "baseline": "threshold",
+   "diff": -0.013,
+   "lo": -0.04,
+   "hi": 0.0,
+   "n": 30,
+   "win": 0.0,
+   "loss": 0.033
+  },
+  {
+   "scenario": "jitter",
+   "severity": 0.0,
+   "baseline": "hysteresis",
+   "diff": -0.013,
+   "lo": -0.04,
+   "hi": 0.0,
+   "n": 30,
+   "win": 0.0,
+   "loss": 0.033
+  },
+  {
+   "scenario": "jitter",
+   "severity": 0.0,
+   "baseline": "truth_switch",
+   "diff": 0.0,
+   "lo": 0.0,
+   "hi": 0.0,
+   "n": 30,
+   "win": 0.0,
+   "loss": 0.0
+  },
+  {
+   "scenario": "jitter",
+   "severity": 0.5,
+   "baseline": "fixed",
+   "diff": 0.0,
+   "lo": 0.0,
+   "hi": 0.0,
+   "n": 30,
+   "win": 0.0,
+   "loss": 0.0
+  },
+  {
+   "scenario": "jitter",
+   "severity": 0.5,
+   "baseline": "threshold",
+   "diff": 0.08,
+   "lo": 0.013,
+   "hi": 0.16,
+   "n": 30,
+   "win": 0.133,
+   "loss": 0.0
+  },
+  {
+   "scenario": "jitter",
+   "severity": 0.5,
+   "baseline": "hysteresis",
+   "diff": 0.08,
+   "lo": 0.013,
+   "hi": 0.16,
+   "n": 30,
+   "win": 0.133,
+   "loss": 0.0
+  },
+  {
+   "scenario": "jitter",
+   "severity": 0.5,
+   "baseline": "truth_switch",
+   "diff": 0.013,
+   "lo": -0.24,
+   "hi": 0.28,
+   "n": 30,
+   "win": 0.1,
+   "loss": 0.133
+  },
+  {
+   "scenario": "shrink",
+   "severity": 0.95,
+   "baseline": "fixed",
+   "diff": 4.493,
+   "lo": 4.32,
+   "hi": 4.68,
+   "n": 30,
+   "win": 1.0,
+   "loss": 0.0
+  },
+  {
+   "scenario": "shrink",
+   "severity": 0.95,
+   "baseline": "threshold",
+   "diff": 1.493,
+   "lo": 1.253,
+   "hi": 1.733,
+   "n": 30,
+   "win": 0.967,
+   "loss": 0.0
+  },
+  {
+   "scenario": "shrink",
+   "severity": 0.95,
+   "baseline": "hysteresis",
+   "diff": 1.493,
+   "lo": 1.253,
+   "hi": 1.733,
+   "n": 30,
+   "win": 0.967,
+   "loss": 0.0
+  },
+  {
+   "scenario": "shrink",
+   "severity": 0.95,
+   "baseline": "truth_switch",
+   "diff": -0.547,
+   "lo": -0.747,
+   "hi": -0.333,
+   "n": 30,
+   "win": 0.067,
+   "loss": 0.867
+  },
+  {
+   "scenario": "fatigue",
+   "severity": 0.8,
+   "baseline": "fixed",
+   "diff": 4.867,
+   "lo": 4.653,
+   "hi": 5.093,
+   "n": 30,
+   "win": 1.0,
+   "loss": 0.0
+  },
+  {
+   "scenario": "fatigue",
+   "severity": 0.8,
+   "baseline": "threshold",
+   "diff": -0.107,
+   "lo": -0.453,
+   "hi": 0.253,
+   "n": 30,
+   "win": 0.533,
+   "loss": 0.467
+  },
+  {
+   "scenario": "fatigue",
+   "severity": 0.8,
+   "baseline": "hysteresis",
+   "diff": -0.12,
+   "lo": -0.48,
+   "hi": 0.253,
+   "n": 30,
+   "win": 0.533,
+   "loss": 0.467
+  },
+  {
+   "scenario": "fatigue",
+   "severity": 0.8,
+   "baseline": "truth_switch",
+   "diff": -1.893,
+   "lo": -2.213,
+   "hi": -1.547,
+   "n": 30,
+   "win": 0.033,
+   "loss": 0.967
+  }
+ ],
+ "calibration": [
+  [
+   0.8391583739369057,
+   0.8072916666666666,
+   192
+  ],
+  [
+   0.995946488776868,
+   0.9898598610003418,
+   17554
+  ]
+ ],
+ "ablations": {
+  "variants": [
+   "residual",
+   "no_adapt",
+   "no_fusion",
+   "no_changepoint",
+   "no_verify"
+  ],
+  "seeds": 15,
+  "cells": [
+   {
+    "scenario": "multi",
+    "severity": 0.0,
+    "variant": "no_adapt",
+    "cpm": [
+     12.267,
+     11.893,
+     12.64
+    ]
+   },
+   {
+    "scenario": "multi",
+    "severity": 0.0,
+    "variant": "no_changepoint",
+    "cpm": [
+     12.24,
+     11.893,
+     12.587
+    ]
+   },
+   {
+    "scenario": "multi",
+    "severity": 0.0,
+    "variant": "no_fusion",
+    "cpm": [
+     12.24,
+     11.893,
+     12.587
+    ]
+   },
+   {
+    "scenario": "multi",
+    "severity": 0.0,
+    "variant": "no_verify",
+    "cpm": [
+     12.24,
+     11.893,
+     12.587
+    ]
+   },
+   {
+    "scenario": "multi",
+    "severity": 0.0,
+    "variant": "residual",
+    "cpm": [
+     12.24,
+     11.893,
+     12.587
+    ]
+   },
+   {
+    "scenario": "multi",
+    "severity": 0.5,
+    "variant": "no_adapt",
+    "cpm": [
+     11.76,
+     11.413,
+     12.081
+    ]
+   },
+   {
+    "scenario": "multi",
+    "severity": 0.5,
+    "variant": "no_changepoint",
+    "cpm": [
+     12.213,
+     11.867,
+     12.587
+    ]
+   },
+   {
+    "scenario": "multi",
+    "severity": 0.5,
+    "variant": "no_fusion",
+    "cpm": [
+     12.213,
+     11.867,
+     12.587
+    ]
+   },
+   {
+    "scenario": "multi",
+    "severity": 0.5,
+    "variant": "no_verify",
+    "cpm": [
+     12.213,
+     11.867,
+     12.587
+    ]
+   },
+   {
+    "scenario": "multi",
+    "severity": 0.5,
+    "variant": "residual",
+    "cpm": [
+     12.213,
+     11.867,
+     12.587
+    ]
+   },
+   {
+    "scenario": "multi",
+    "severity": 0.8,
+    "variant": "no_adapt",
+    "cpm": [
+     11.173,
+     10.827,
+     11.547
+    ]
+   },
+   {
+    "scenario": "multi",
+    "severity": 0.8,
+    "variant": "no_changepoint",
+    "cpm": [
+     11.547,
+     11.2,
+     11.92
+    ]
+   },
+   {
+    "scenario": "multi",
+    "severity": 0.8,
+    "variant": "no_fusion",
+    "cpm": [
+     11.547,
+     11.2,
+     11.92
+    ]
+   },
+   {
+    "scenario": "multi",
+    "severity": 0.8,
+    "variant": "no_verify",
+    "cpm": [
+     12.027,
+     11.653,
+     12.427
+    ]
+   },
+   {
+    "scenario": "multi",
+    "severity": 0.8,
+    "variant": "residual",
+    "cpm": [
+     11.547,
+     11.2,
+     11.92
+    ]
+   },
+   {
+    "scenario": "multi",
+    "severity": 0.95,
+    "variant": "no_adapt",
+    "cpm": [
+     10.773,
+     10.32,
+     11.253
+    ]
+   },
+   {
+    "scenario": "multi",
+    "severity": 0.95,
+    "variant": "no_changepoint",
+    "cpm": [
+     10.533,
+     10.16,
+     10.933
+    ]
+   },
+   {
+    "scenario": "multi",
+    "severity": 0.95,
+    "variant": "no_fusion",
+    "cpm": [
+     10.613,
+     10.24,
+     11.013
+    ]
+   },
+   {
+    "scenario": "multi",
+    "severity": 0.95,
+    "variant": "no_verify",
+    "cpm": [
+     11.12,
+     10.853,
+     11.387
+    ]
+   },
+   {
+    "scenario": "multi",
+    "severity": 0.95,
+    "variant": "residual",
+    "cpm": [
+     10.507,
+     10.08,
+     10.933
+    ]
+   },
+   {
+    "scenario": "shrink",
+    "severity": 0.0,
+    "variant": "no_adapt",
+    "cpm": [
+     12.267,
+     11.893,
+     12.64
+    ]
+   },
+   {
+    "scenario": "shrink",
+    "severity": 0.0,
+    "variant": "no_changepoint",
+    "cpm": [
+     12.24,
+     11.893,
+     12.587
+    ]
+   },
+   {
+    "scenario": "shrink",
+    "severity": 0.0,
+    "variant": "no_fusion",
+    "cpm": [
+     12.24,
+     11.893,
+     12.587
+    ]
+   },
+   {
+    "scenario": "shrink",
+    "severity": 0.0,
+    "variant": "no_verify",
+    "cpm": [
+     12.24,
+     11.893,
+     12.587
+    ]
+   },
+   {
+    "scenario": "shrink",
+    "severity": 0.0,
+    "variant": "residual",
+    "cpm": [
+     12.24,
+     11.893,
+     12.587
+    ]
+   },
+   {
+    "scenario": "shrink",
+    "severity": 0.5,
+    "variant": "no_adapt",
+    "cpm": [
+     12.107,
+     11.76,
+     12.453
+    ]
+   },
+   {
+    "scenario": "shrink",
+    "severity": 0.5,
+    "variant": "no_changepoint",
+    "cpm": [
+     12.24,
+     11.893,
+     12.587
+    ]
+   },
+   {
+    "scenario": "shrink",
+    "severity": 0.5,
+    "variant": "no_fusion",
+    "cpm": [
+     12.24,
+     11.893,
+     12.587
+    ]
+   },
+   {
+    "scenario": "shrink",
+    "severity": 0.5,
+    "variant": "no_verify",
+    "cpm": [
+     12.24,
+     11.893,
+     12.587
+    ]
+   },
+   {
+    "scenario": "shrink",
+    "severity": 0.5,
+    "variant": "residual",
+    "cpm": [
+     12.24,
+     11.893,
+     12.587
+    ]
+   },
+   {
+    "scenario": "shrink",
+    "severity": 0.8,
+    "variant": "no_adapt",
+    "cpm": [
+     10.16,
+     9.867,
+     10.453
+    ]
+   },
+   {
+    "scenario": "shrink",
+    "severity": 0.8,
+    "variant": "no_changepoint",
+    "cpm": [
+     11.547,
+     11.04,
+     12.0
+    ]
+   },
+   {
+    "scenario": "shrink",
+    "severity": 0.8,
+    "variant": "no_fusion",
+    "cpm": [
+     11.547,
+     11.04,
+     12.0
+    ]
+   },
+   {
+    "scenario": "shrink",
+    "severity": 0.8,
+    "variant": "no_verify",
+    "cpm": [
+     12.107,
+     11.707,
+     12.507
+    ]
+   },
+   {
+    "scenario": "shrink",
+    "severity": 0.8,
+    "variant": "residual",
+    "cpm": [
+     11.547,
+     11.04,
+     12.0
+    ]
+   },
+   {
+    "scenario": "shrink",
+    "severity": 0.95,
+    "variant": "no_adapt",
+    "cpm": [
+     10.16,
+     9.84,
+     10.453
+    ]
+   },
+   {
+    "scenario": "shrink",
+    "severity": 0.95,
+    "variant": "no_changepoint",
+    "cpm": [
+     11.733,
+     11.36,
+     12.133
+    ]
+   },
+   {
+    "scenario": "shrink",
+    "severity": 0.95,
+    "variant": "no_fusion",
+    "cpm": [
+     11.733,
+     11.36,
+     12.133
+    ]
+   },
+   {
+    "scenario": "shrink",
+    "severity": 0.95,
+    "variant": "no_verify",
+    "cpm": [
+     12.32,
+     11.973,
+     12.667
+    ]
+   },
+   {
+    "scenario": "shrink",
+    "severity": 0.95,
+    "variant": "residual",
+    "cpm": [
+     11.733,
+     11.36,
+     12.133
+    ]
+   }
+  ]
+ }
+}

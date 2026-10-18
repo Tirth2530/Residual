@@ -1,0 +1,334 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Residual</title>
+<link rel="icon" href="data:,">
+<style>
+  :root {
+    --bg: #f4f2ee; --panel: #ffffff; --ink: #1d1f22; --quiet: #6b6f76; --rule: #e3e0da;
+    --accent: #1b5fd9; --accent-soft: #e6eefc; --good: #1d8a4e; --warn: #c27c0e; --bad: #c2362b;
+    --help: #b3261e; --help-soft: #fbe9e7; --mono: ui-monospace, "SF Mono", Menlo, Consolas, monospace;
+    --sans: "Inter", "Segoe UI", system-ui, -apple-system, sans-serif;
+  }
+  * { box-sizing: border-box; }
+  html, body { margin: 0; height: 100%; background: var(--bg); color: var(--ink); font-family: var(--sans); }
+  button, select { font: inherit; }
+  header { display: flex; align-items: center; gap: 16px; padding: 12px 20px; border-bottom: 1px solid var(--rule); background: var(--panel); }
+  .brand { font-weight: 700; font-size: 18px; letter-spacing: -0.01em; }
+  .brand span { color: var(--quiet); font-weight: 500; margin-left: 8px; font-size: 13px; }
+  .spacer { flex: 1; }
+  .chip { font-size: 12px; padding: 4px 9px; border-radius: 999px; background: #efede8; color: var(--quiet); white-space: nowrap; }
+  .chip.on { background: #e3f3ea; color: var(--good); }
+  .btn { border: 1px solid var(--rule); background: var(--panel); padding: 7px 12px; border-radius: 8px; cursor: pointer; }
+  .btn:hover { border-color: #c9c5bd; }
+  .btn.rec.on { background: var(--bad); color: #fff; border-color: var(--bad); }
+  select.btn { padding-right: 8px; }
+
+  main { display: grid; grid-template-columns: minmax(0, 1.15fr) minmax(0, 1fr); gap: 20px; padding: 20px; height: calc(100% - 59px); }
+  section { background: var(--panel); border: 1px solid var(--rule); border-radius: 14px; padding: 20px; overflow: auto; }
+  h2 { margin: 0 0 14px; font-size: 12px; text-transform: uppercase; letter-spacing: 0.08em; color: var(--quiet); font-weight: 600; }
+
+  /* Person's view */
+  .person { display: flex; flex-direction: column; gap: 18px; }
+  .banner { display: flex; align-items: center; justify-content: space-between; gap: 12px; padding: 16px 18px; border-radius: 12px; background: var(--accent-soft); min-height: 76px; transition: background .3s; }
+  .banner.verify { background: #fff4dc; }
+  .banner.calib { background: #ede9fe; }
+  .banner .label { font-size: 13px; color: var(--quiet); }
+  .banner .value { font-size: 26px; font-weight: 700; letter-spacing: -0.01em; }
+  .dots { display: flex; gap: 8px; }
+  .dots i { width: 16px; height: 16px; border-radius: 50%; border: 2px solid var(--warn); display: block; }
+  .dots i.done { background: var(--warn); }
+  .board { display: grid; grid-template-columns: repeat(2, 1fr); gap: 14px; flex: 1; }
+  .tile { display: flex; align-items: center; justify-content: center; text-align: center; min-height: 92px; border-radius: 14px; border: 2px solid var(--rule); font-size: clamp(20px, 2.4vw, 30px); font-weight: 600; transition: all .15s; padding: 10px; }
+  .tile.help { color: var(--help); background: var(--help-soft); border-color: #f2c7c2; }
+  .tile.lit { border-color: var(--accent); background: var(--accent); color: #fff; transform: scale(1.02); box-shadow: 0 6px 22px rgba(27, 95, 217, .25); }
+  .tile.help.lit { background: var(--help); border-color: var(--help); }
+  .tile.confirm { outline: 4px dashed var(--warn); outline-offset: 3px; }
+  .tile.paused { opacity: .45; }
+  .spoken { min-height: 56px; display: flex; align-items: center; gap: 12px; font-size: 22px; color: var(--quiet); }
+  .spoken b { color: var(--ink); font-size: 26px; }
+  .keys { font-size: 13px; color: var(--quiet); }
+  .keys kbd { font-family: var(--mono); background: #efede8; border-radius: 5px; padding: 2px 6px; border: 1px solid var(--rule); }
+
+  /* Under the hood */
+  .hood { display: flex; flex-direction: column; gap: 14px; }
+  .cards { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 10px; }
+  .card { border: 1px solid var(--rule); border-radius: 12px; padding: 12px; position: relative; }
+  .card.active { border-color: var(--accent); box-shadow: inset 0 0 0 1px var(--accent); }
+  .card.cand { border-color: var(--warn); box-shadow: inset 0 0 0 1px var(--warn); }
+  .card h3 { margin: 0 0 6px; font-size: 14px; display: flex; justify-content: space-between; align-items: center; }
+  .badge { font-size: 10px; font-weight: 700; text-transform: uppercase; letter-spacing: .06em; padding: 2px 6px; border-radius: 4px; background: var(--accent); color: #fff; }
+  .badge.cand { background: var(--warn); }
+  .badge.cp { background: var(--bad); }
+  .big { font-size: 26px; font-weight: 700; font-variant-numeric: tabular-nums; }
+  .ci { position: relative; height: 6px; border-radius: 3px; background: #efede8; margin: 6px 0 8px; }
+  .ci .band { position: absolute; top: 0; bottom: 0; background: #b9cdf3; border-radius: 3px; }
+  .ci .pt { position: absolute; top: -3px; width: 2px; height: 12px; background: var(--accent); }
+  .kv { display: grid; grid-template-columns: auto 1fr; gap: 2px 8px; font-size: 12px; color: var(--quiet); }
+  .kv b { color: var(--ink); font-weight: 600; font-variant-numeric: tabular-nums; text-align: right; }
+  .meter { position: relative; height: 8px; background: #efede8; border-radius: 4px; margin-top: 8px; overflow: hidden; }
+  .meter .fill { position: absolute; left: 0; top: 0; bottom: 0; background: #9aa4b2; transition: width .05s; }
+  .meter .on { position: absolute; top: 0; bottom: 0; width: 2px; background: var(--ink); opacity: .5; }
+  canvas.spark { width: 100%; height: 38px; display: block; margin-top: 8px; }
+  .evidence { border: 1px solid var(--rule); border-radius: 12px; padding: 12px; }
+  .ev-bar { position: relative; height: 16px; border-radius: 8px; background: #efede8; overflow: hidden; margin-top: 6px; }
+  .ev-bar .fill { position: absolute; left: 0; top: 0; bottom: 0; background: var(--accent); transition: width .05s; }
+  .ev-row { display: flex; justify-content: space-between; font-size: 12px; color: var(--quiet); }
+  .fused { display: flex; gap: 8px; flex-wrap: wrap; margin-top: 8px; }
+  .fused span { font-size: 12px; padding: 3px 8px; border-radius: 6px; background: #f5f3ef; font-variant-numeric: tabular-nums; }
+  .fused span.active { background: var(--accent); color: #fff; }
+  .row2 { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; }
+  .sliders label { display: grid; grid-template-columns: 60px 1fr 40px; align-items: center; gap: 8px; font-size: 13px; margin: 6px 0; }
+  .sliders input { width: 100%; accent-color: var(--bad); }
+  .note { font-size: 11px; color: var(--quiet); margin-top: 4px; }
+  .log { font-family: var(--mono); font-size: 12px; line-height: 1.55; max-height: 220px; overflow: auto; border: 1px solid var(--rule); border-radius: 12px; padding: 10px 12px; background: #fbfaf8; }
+  .log div { white-space: pre-wrap; }
+  .log .t { color: #a3a7ad; margin-right: 8px; }
+  .log .hi { color: var(--accent); font-weight: 600; }
+  .log .warn { color: var(--bad); }
+  .preview { width: 160px; border-radius: 8px; display: none; }
+  .toast { position: fixed; bottom: 24px; left: 50%; transform: translateX(-50%); background: var(--help); color: #fff; padding: 14px 22px; border-radius: 12px; font-weight: 600; font-size: 18px; box-shadow: 0 8px 30px rgba(0,0,0,.2); display: none; z-index: 10; }
+  @media (max-width: 1100px) { main { grid-template-columns: 1fr; height: auto; } .cards { grid-template-columns: 1fr; } }
+</style>
+</head>
+<body>
+<header>
+  <div class="brand">Residual<span>failover for the human body</span></div>
+  <select id="source" class="btn" title="Input source">
+    <option value="keyboard">Keyboard (hold H / B / K)</option>
+    <option value="webcam">Webcam</option>
+    <option value="autopilot">Autopilot (simulated person)</option>
+  </select>
+  <button class="btn" id="calibrate">Calibrate</button>
+  <button class="btn rec" id="record">Record</button>
+  <div class="spacer"></div>
+  <span class="chip" id="chip-fps">-- fps</span>
+  <span class="chip" id="chip-tts">Voice</span>
+  <span class="chip" id="chip-alert">Alerts</span>
+  <span class="chip" id="chip-keys">Keys</span>
+  <span class="chip" id="chip-conn">Connecting</span>
+</header>
+
+<main>
+  <section class="person">
+    <h2>What the person sees</h2>
+    <div class="banner" id="banner">
+      <div>
+        <div class="label" id="banner-label">Control</div>
+        <div class="value" id="banner-value">Hand</div>
+      </div>
+      <div class="dots" id="dots"></div>
+    </div>
+    <div class="board" id="board"></div>
+    <div class="spoken" id="spoken">&nbsp;</div>
+    <div class="keys" id="keyhelp">Keyboard source: hold <kbd>H</kbd> pinch, <kbd>B</kbd> eyebrow raise, <kbd>K</kbd> long blink. Hold for about half a second.</div>
+  </section>
+
+  <section class="hood">
+    <h2>Under the hood</h2>
+    <div class="cards" id="cards"></div>
+    <div class="row2">
+      <div class="evidence">
+        <div class="ev-row"><span>Evidence (CUSUM) for <b id="ev-opt">hand</b></span><span id="ev-num">0.0 / 4.5</span></div>
+        <div class="ev-bar"><div class="fill" id="ev-fill"></div></div>
+        <div class="note" id="ev-note">Bound from this action's error budget</div>
+        <div class="fused" id="fused"></div>
+      </div>
+      <div class="evidence sliders">
+        <div class="ev-row"><span>Simulated degradation</span><img class="preview" id="preview" alt="camera preview"></div>
+        <label>Hand <input type="range" min="0" max="1" step="0.01" value="0" data-ch="hand"><span>0%</span></label>
+        <label>Eyebrow <input type="range" min="0" max="1" step="0.01" value="0" data-ch="brow"><span>0%</span></label>
+        <label>Blink <input type="range" min="0" max="1" step="0.01" value="0" data-ch="blink"><span>0%</span></label>
+        <div class="note">Corrupts the raw signal only (shrink, jitter, dropped frames). Scores must fall on their own.</div>
+      </div>
+    </div>
+    <div>
+      <h2 style="margin-bottom:8px">Event log: observations</h2>
+      <div class="log" id="log"></div>
+    </div>
+  </section>
+</main>
+<div class="toast" id="toast"></div>
+
+<script>
+const CH = ["hand", "brow", "blink"];
+const NICE = { hand: "Hand", brow: "Eyebrow", blink: "Blink" };
+const ACTION = { hand: "pinch", brow: "eyebrow raise", blink: "long blink" };
+const $ = (id) => document.getElementById(id);
+let ws, state = null, lastLog = "", audioCtxUnlocked = false;
+
+function connect() {
+  ws = new WebSocket(`ws://${location.host}/ws`);
+  ws.onopen = () => { $("chip-conn").textContent = "Live"; $("chip-conn").classList.add("on"); };
+  ws.onclose = () => { $("chip-conn").textContent = "Reconnecting"; $("chip-conn").classList.remove("on"); setTimeout(connect, 1000); };
+  ws.onmessage = (m) => {
+    const msg = JSON.parse(m.data);
+    if (msg.type === "state") { state = msg.state; render(); }
+    else if (msg.type === "events") msg.events.forEach(onEvent);
+  };
+}
+const send = (o) => ws && ws.readyState === 1 && ws.send(JSON.stringify(o));
+
+// ---------- events ----------
+async function speak(text) {
+  $("spoken").innerHTML = `Said: <b>${escapeHtml(text)}</b>`;
+  try {
+    const r = await fetch(`/api/tts?text=${encodeURIComponent(text)}`);
+    if (r.status === 200) { const b = await r.blob(); new Audio(URL.createObjectURL(b)).play(); return; }
+  } catch (e) {}
+  if ("speechSynthesis" in window) { const u = new SpeechSynthesisUtterance(text); u.rate = 0.95; speechSynthesis.speak(u); }
+}
+function toast(text, ms = 3500) { const t = $("toast"); t.textContent = text; t.style.display = "block"; clearTimeout(t._h); t._h = setTimeout(() => t.style.display = "none", ms); }
+function onEvent(e) {
+  if (e.kind === "speak") speak(e.data.text);
+  if (e.kind === "alert") toast(`Caregiver alerted: "${e.data.text}"`);
+}
+
+// ---------- rendering ----------
+function pct(x) { return x == null ? "--" : `${Math.round(x * 100)}%`; }
+function escapeHtml(s) { return String(s).replace(/[&<>"]/g, (c) => ({ "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;" }[c])); }
+
+function buildCards() {
+  $("cards").innerHTML = CH.map((c) => `
+    <div class="card" id="card-${c}">
+      <h3>${NICE[c]} <span id="badge-${c}"></span></h3>
+      <div class="big" id="p-${c}">--</div>
+      <div class="ci"><div class="band" id="band-${c}"></div><div class="pt" id="pt-${c}"></div></div>
+      <div class="kv">
+        <span>strength</span><b id="lvl-${c}">--</b>
+        <span>trend /min</span><b id="tr-${c}">--</b>
+        <span>d'</span><b id="d-${c}">--</b>
+        <span>false /min</span><b id="fa-${c}">--</b>
+        <span>observed</span><b id="obs-${c}">--</b>
+      </div>
+      <div class="meter"><div class="fill" id="amp-${c}"></div><div class="on" id="on-${c}"></div></div>
+      <canvas class="spark" id="sp-${c}"></canvas>
+    </div>`).join("");
+}
+
+function drawSpark(c, hist) {
+  const cv = $(`sp-${c}`); if (!cv) return;
+  const w = cv.clientWidth, h = cv.clientHeight, dpr = window.devicePixelRatio || 1;
+  if (cv.width !== w * dpr) { cv.width = w * dpr; cv.height = h * dpr; }
+  const g = cv.getContext("2d"); g.setTransform(dpr, 0, 0, dpr, 0, 0); g.clearRect(0, 0, w, h);
+  if (!hist || hist.length < 2) return;
+  const t1 = hist[hist.length - 1][0], t0 = t1 - 120;
+  const X = (t) => (Math.max(t, t0) - t0) / 120 * w, Y = (p) => h - 2 - p * (h - 4);
+  g.fillStyle = "rgba(27,95,217,0.15)"; g.beginPath();
+  hist.forEach((r, i) => i ? g.lineTo(X(r[0]), Y(r[3])) : g.moveTo(X(r[0]), Y(r[3])));
+  for (let i = hist.length - 1; i >= 0; i--) g.lineTo(X(hist[i][0]), Y(hist[i][2]));
+  g.closePath(); g.fill();
+  g.strokeStyle = "#1b5fd9"; g.lineWidth = 1.5; g.beginPath();
+  hist.forEach((r, i) => i ? g.lineTo(X(r[0]), Y(r[1])) : g.moveTo(X(r[0]), Y(r[1]))); g.stroke();
+  g.strokeStyle = "rgba(194,54,43,0.5)"; g.setLineDash([3, 3]); g.beginPath(); g.moveTo(0, Y(0.7)); g.lineTo(w, Y(0.7)); g.stroke(); g.setLineDash([]);
+}
+
+function render() {
+  const s = state, rt = s.runtime, pol = s.policy, ctl = s.control;
+  // header chips
+  $("chip-fps").textContent = `${rt.fps || 0} fps`;
+  $("chip-tts").textContent = rt.tts ? "Voice: ElevenLabs" : "Voice: browser"; $("chip-tts").classList.toggle("on", rt.tts);
+  $("chip-alert").textContent = rt.alerts ? "Alerts: on" : "Alerts: off"; $("chip-alert").classList.toggle("on", rt.alerts);
+  $("chip-keys").textContent = `Keys: ${rt.keystrokes}`; $("chip-keys").classList.toggle("on", rt.keystrokes !== "off");
+  if ($("source").value !== rt.source && document.activeElement !== $("source")) $("source").value = rt.source;
+  $("record").classList.toggle("on", rt.recording); $("record").textContent = rt.recording ? "Recording" : "Record";
+  $("keyhelp").style.display = rt.source === "keyboard" ? "block" : "none";
+  if (rt.preview) { $("preview").src = "data:image/jpeg;base64," + rt.preview; $("preview").style.display = "block"; } else $("preview").style.display = "none";
+
+  // banner
+  const b = $("banner"); b.className = "banner"; let dots = "";
+  if (rt.calibration) {
+    b.classList.add("calib");
+    $("banner-label").textContent = `Calibration ${rt.calibration.index + 1} of ${rt.calibration.total} · ${rt.calibration.remaining}s`;
+    $("banner-value").textContent = rt.calibration.prompt;
+  } else if (pol.state === "VERIFY" && pol.candidate) {
+    b.classList.add("verify");
+    $("banner-label").textContent = pol.probing ? "Quick check" : "Testing a new way to select";
+    $("banner-value").textContent = `${pol.candidate.map((c) => ACTION[c]).join(" + ")}: do it twice`;
+    for (let i = 0; i < pol.verify_needed; i++) dots += `<i class="${i < pol.verify_count ? "done" : ""}"></i>`;
+  } else {
+    $("banner-label").textContent = ctl.length > 1 ? "Control (combined)" : "Control";
+    $("banner-value").textContent = ctl.map((c) => NICE[c]).join(" + ");
+  }
+  $("dots").innerHTML = dots;
+
+  // board
+  const bd = s.board;
+  if ($("board").children.length !== bd.options.length) $("board").innerHTML = bd.options.map((o, i) => `<div class="tile ${o.cls === "help" ? "help" : ""}" id="tile-${i}">${escapeHtml(o.label)}</div>`).join("");
+  bd.options.forEach((o, i) => {
+    const t = $(`tile-${i}`);
+    t.classList.toggle("lit", i === bd.highlight && !bd.paused && bd.confirm == null && !rt.calibration);
+    t.classList.toggle("confirm", bd.confirm === i);
+    t.classList.toggle("paused", bd.paused || !!rt.calibration);
+  });
+
+  // channel cards
+  if (!$("cards").children.length) buildCards();
+  CH.forEach((c) => {
+    const d = s.channels[c], st = d.stats || {};
+    const card = $(`card-${c}`);
+    const isActive = ctl.includes(c), isCand = pol.candidate && pol.candidate.includes(c) && pol.state === "VERIFY";
+    card.classList.toggle("active", isActive && !isCand); card.classList.toggle("cand", !!isCand);
+    $(`badge-${c}`).innerHTML = (d.cp_recent ? '<span class="badge cp">change</span> ' : "") + (isCand ? '<span class="badge cand">testing</span>' : isActive ? '<span class="badge">active</span>' : "");
+    $(`p-${c}`).textContent = pct(st.p_hat);
+    $(`band-${c}`).style.left = `${(st.p_lo || 0) * 100}%`; $(`band-${c}`).style.width = `${((st.p_hi || 0) - (st.p_lo || 0)) * 100}%`;
+    $(`pt-${c}`).style.left = `calc(${(st.p_hat || 0) * 100}% - 1px)`;
+    $(`lvl-${c}`).textContent = `${d.level.toFixed(2)} ± ${d.level_sd.toFixed(2)}`;
+    const tr = d.trend * 60; $(`tr-${c}`).textContent = `${tr >= 0 ? "+" : ""}${tr.toFixed(2)}`;
+    $(`d-${c}`).textContent = st.d_prime != null ? st.d_prime.toFixed(1) : "--";
+    $(`fa-${c}`).textContent = st.fa_per_min != null ? st.fa_per_min.toFixed(2) : "--";
+    $(`obs-${c}`).textContent = d.obs_n >= 1 ? `${pct(d.obs_rate)} (n≈${Math.round(d.obs_n)})` : "--";
+    const scale = 1.4;
+    $(`amp-${c}`).style.width = `${Math.max(0, Math.min(1, d.amp / scale)) * 100}%`;
+    $(`amp-${c}`).style.background = d.visible ? (d.in_episode ? "#1b5fd9" : "#9aa4b2") : "#e0b4ae";
+    $(`on-${c}`).style.left = `${Math.min(1, d.onset / scale) * 100}%`;
+    drawSpark(c, s.history && s.history[c]);
+  });
+
+  // evidence
+  const ev = s.evidence, watch = pol.state === "VERIFY" && pol.candidate ? pol.candidate : ctl;
+  $("ev-opt").textContent = watch.map((c) => NICE[c].toLowerCase()).join(" + ");
+  $("ev-num").textContent = `${ev.score.toFixed(1)} / ${ev.bound.toFixed(1)}`;
+  $("ev-fill").style.width = `${Math.min(1, ev.score / ev.bound) * 100}%`;
+  $("ev-note").textContent = `Bound ln((1−β)/α) for a "${ev.cls}" action`;
+  const fusedKeys = Object.keys(s.options).filter((k) => k.includes("+"));
+  $("fused").innerHTML = fusedKeys.map((k) => `<span class="${ctl.join("+") === k ? "active" : ""}">${k.split("+").map((c) => NICE[c]).join(" + ")} ${pct(s.options[k].p_hat)}</span>`).join("");
+
+  // log
+  const logText = JSON.stringify(s.log.slice(-1));
+  if (logText !== lastLog) {
+    lastLog = logText;
+    $("log").innerHTML = s.log.slice().reverse().map((l) => {
+      const cls = /Control:|Selected/.test(l.text) ? "hi" : /missed|failed|Changepoint|degrading|weak|cancelled/.test(l.text) ? "warn" : "";
+      return `<div><span class="t">${l.t.toFixed(1)}</span><span class="${cls}">${escapeHtml(l.text)}</span></div>`;
+    }).join("");
+  }
+}
+
+// ---------- inputs ----------
+const KEYMAP = { h: "hand", b: "brow", k: "blink" };
+const held = {};
+window.addEventListener("keydown", (e) => {
+  const c = KEYMAP[e.key.toLowerCase()]; if (!c || e.repeat || held[c]) return;
+  held[c] = true; send({ type: "key", channel: c, down: true });
+});
+window.addEventListener("keyup", (e) => {
+  const c = KEYMAP[e.key.toLowerCase()]; if (!c) return;
+  held[c] = false; send({ type: "key", channel: c, down: false });
+});
+document.querySelectorAll(".sliders input").forEach((el) => {
+  el.addEventListener("input", () => {
+    el.nextElementSibling.textContent = `${Math.round(el.value * 100)}%`;
+    send({ type: "degrade", channel: el.dataset.ch, level: parseFloat(el.value) });
+  });
+});
+$("source").addEventListener("change", (e) => send({ type: "source", value: e.target.value }));
+$("calibrate").addEventListener("click", () => send({ type: "calibrate" }));
+$("record").addEventListener("click", () => send({ type: "record", value: !(state && state.runtime.recording) }));
+document.addEventListener("click", () => { if (!audioCtxUnlocked && "speechSynthesis" in window) { speechSynthesis.speak(new SpeechSynthesisUtterance("")); audioCtxUnlocked = true; } }, { once: true });
+connect();
+</script>
+</body>
+</html>
