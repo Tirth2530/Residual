@@ -31,7 +31,7 @@ best placed, only that person's phone gets "Dev needs help repositioning. Can yo
   suggestions to say. The person always picks what is said.
 
 ```
- webcam ─► MediaPipe face landmarks ─► gesture timing + safety (eyes/) ─► Residual app (Electron)
+ webcam ─► MediaPipe face landmarks ─► Deepseek Model ─► gesture timing + safety (eyes/) ─► Residual app (Electron)
                                        blink twice · eyebrows · long blink    two big choices, real apps, Errands, Care circle
                                                                                    │ structured intent (local HTTP + token)
                                                                                    ▼
@@ -73,20 +73,7 @@ moment = back.** More options are split in two again, most likely first: 8 optio
 | 1.5 to 4 s | counts toward help: three within 15 s calls for help |
 | over 4 s | resting the eyes: nothing, and the help count starts again |
 
-`eyes/tests/safety.test.ts` runs the Back detector and the help detector on the same frames, configured as
-the app configures them, and checks every closure length from 0.1 s to 5 s does at most one thing. Help uses
-the same per-person eye levels as the other gestures.
 
-- **Setup you can do alone.** Camera check, Learn your face, Try it, Extras. Each screen moves on by itself
-  with a spoken countdown when things work. When a choice is needed (Retry / Continue / Skip) the options light
-  up in turn and closing your eyes for a moment picks the lit one (general eye levels until your own are
-  learned). The camera is mirrored with your eyes and brows outlined as Residual sees them, with "2 / 3
-  learned" counts, a sound for each gesture, and "Blink once more" after the first blink. Keyboard and mouse
-  still work for a helper.
-- **Several controls, all calibrated, none assumed.** Blink twice, eyebrows, Back closure, plus optional
-  **glances** (centre, left, right, up: your own range and direction) and a **wink** (accepted only if the other
-  eye stays open and your normal blinks never looked like winks). Settings, How I choose. With a wink in use,
-  the help detector requires both eyes, so a held wink can never count toward help (tested).
 - **Adapts when a signal gets harder to read, and always asks.** `ui/quality.js` tracks the right-side signal
   (eyebrows or the wink): each attempt's strength against your Setup level, near misses, attempts that fell
   short and were tried again, timing consistency, and whether the face was even visible. It never claims to
@@ -94,39 +81,13 @@ the same per-person eye levels as the other gestures.
   mode?" In one-signal mode the sides light up in turn and blinking twice picks the lit one; the eyebrows are
   still watched, and when they're reliable again it asks "Restore two-signal control?". The Lab shows the
   history and the exact reasons. "Simulate eyebrows weakening (demo)" puts a red SIMULATED banner on Home and Lab.
-- **Test my controls** (Settings): 20 blink twice, 20 of the right-side signal, 10 Back, 10 of each learned
-  fallback, then 2 minutes of normal talking and looking around. Per gesture: prompted, detected, missed, wrong
-  command, median response, false activations; plus false commands per minute. Saved as JSON
-  (`residual-control-tests.json` in the app's data folder). Presentation numbers come only from this test.
-- **Record session** (Settings or Lab): off by default, asks first, numbers only (eye and eyebrow levels per
-  frame, gaze numbers, gestures, thresholds, choices, mode changes). No video, sound or message text.
-  Stop recording and Delete recordings are always there. JSON lines in the app's data folder, `recordings/`.
-- **Websites use the whole window.** The two choices float over the bottom of the page, translucent; buttons
-  hidden behind them aren't offered until scrolled into view. Scroll down / up, Previous page and More are
-  always there; the choices are rebuilt after scrolling. Larger text zooms the site and the choices.
-- **Choices don't move under you.** While you're inside a split the page's choices are frozen; small page
-  changes are ignored; a real change rebuilds them only after a moment without gestures, and says
-  "Choices refreshed".
-- **Known apps use fast built-in actions** (Reels: Next is one pick; YouTube: Play / pause, Next video, Back to
-  videos, videos by title; WhatsApp; Netflix). **Other websites: AI web mode**, Browser Use as a general web
-  fallback: it reads the page once, Residual offers its few actions two at a time, the chosen one runs as one
-  task. Never one call per gesture; timeouts return to the last safe choices; consequential actions (buying,
-  posting, sending, deleting, signing in, security settings) are filtered out in code whatever the model says.
-- **Say something:** Yes / No, Care, Conversation, Comfort, My phrases, and "Reply to Maya" with AI-suggested
-  answers when someone has just written. Suggestions only: the person picks what is said. Optional ElevenLabs
-  voice for the person's words (`ELEVENLABS_API_KEY` in `app/.env`), system voice otherwise.
-- **Help:** three long closures sound the alarm and start the Relay: message, then a call if calls are set up,
-  then the next person; "Your daughter answered. She's on her way."
+
 - **Order my usual (sandbox):** merchant, items, total and delivery, then Confirm / Cancel. Spending caps,
   approved merchants, caregiver approval by reply ("YES 482913"), idempotent sandbox payments, an audit trail and
   a Care Report history. No real money. Details in `agent/README.md`.
-- **Demo Mode** (Settings): a Demo menu that needs no logins: a bundled news page, the labelled weakening,
-  a Relay request (live or clearly SIMULATED), Browser Use, Test my controls, a sandbox order.
-- A helper can use Left / Right arrows, Backspace (back), Escape (Home), P (pause), or click a side.
-- The old three-movement mode with the Python engine: `"input": { "mode": "engine" }` in `app/config.json`.
 
 What the AI is: MediaPipe's face model (computer vision) turns camera frames into face landmarks and
-expression scores. Residual's own calibrated timing logic turns those noisy scores into deliberate
+expression scores which are shared with a local DeepSeek model. Deepseek handles Residual's calibrated timing logic turns those noisy scores into deliberate
 commands (interpretable on purpose, and safety-critical decisions stay deterministic). The agents
 (Residual Relay on Agentverse with Photon; Browser Use for the web) turn choices into real actions within
 fixed limits. It is not facial recognition: it never identifies who someone is. It is a prototype, not a
@@ -166,42 +127,3 @@ python -m pytest -q                          # 73 tests
 ```
 
 `cd eyes && npm test` runs the gesture and safety tests (49). Keys live only in the git-ignored `.env` files.
-
-The central path needs none of Ollama, news, Instagram, WhatsApp or Netflix: camera, two signals, structured
-intent, the care circle, Photon, a human reply, the acknowledgement on screen. **Cmd/Ctrl+L** opens the Lab on a
-second display if there is one.
-
-**Local AI (recommended):** `brew install ollama`, `ollama serve`, then `ollama pull qwen3:4b`
-(or `qwen2.5:3b` on an older laptop). The app picks the best installed model by itself. Without a
-model, everything still works with rule-based replies and summaries. Other options in
-`app/config.json → ai`: any OpenAI-compatible server (LM Studio locally, or xAI Grok, Groq,
-OpenRouter with a key), or Gemini.
-
-```jsonc
-// app/config.json → "ai", examples
-{ "provider": "ollama", "ollamaModel": "auto" }                                                   // local, default
-{ "provider": "openai", "openaiBase": "http://localhost:1234/v1", "openaiModel": "qwen2.5-7b-instruct" } // LM Studio, local
-{ "provider": "openai", "openaiBase": "https://api.x.ai/v1", "openaiKey": "…", "openaiModel": "grok-3-mini" }   // Grok
-{ "provider": "openai", "openaiBase": "https://api.groq.com/openai/v1", "openaiKey": "…", "openaiModel": "qwen/qwen3-32b" } // Groq free tier
-```
-
-Cloud model names change often; check the provider's model list. With a cloud provider, chat
-messages and article text leave the laptop, which is why local is the default.
-
-**No webcam?** In the Lab, choose *Simulated person*: a model of a user drives the real engine.
-Keys also stand in for movements: → next, space select, ← back, Esc home, H help.
-
-## Where to look
-
-| | |
-|---|---|
-| `REVIEW.md` | For a reviewer: architecture, what's tested, known weak spots. Start here to attack it |
-| `docs/CLINICAL.md` | For a clinician: what it is and isn't, how it differs from existing AAC, safety, a validation plan |
-| `docs/DEMO.md` | The 2-minute demo and pitch: beat sheet, setup checklist, fallbacks, Q&A |
-| `docs/JUDGES.md` | The hard questions from a healthcare, a product and a technical reviewer, with straight answers |
-| `agent/README.md` | Residual Relay: profile, tools, safety rules, Photon setup, ASI prompts, Home integration |
-| `engine/docs/` | The engine: math, architecture, evaluation |
-| `engine/eval_out/` | Evaluation results: 30 paired seeds per cell, tables and charts |
-
-Built on Arjun's Residual engine; eye feature extraction, One Euro filter, blink switch and help
-pattern adapted with permission from AGENCY OS (UCSC AI Hackathon 2026).
